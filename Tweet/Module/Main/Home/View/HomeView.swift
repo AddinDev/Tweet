@@ -9,39 +9,82 @@ import SwiftUI
 
 struct HomeView: View {
   
-  private let numbers = [0, 1, 2, 3, 4, 5]
+  @ObservedObject var presenter: HomePresenter
   
+  @State private var showUploadview = false
+    
   var body: some View {
-    NavigationView {
-      content
-        .navigationBarTitle("Tweet")
+    Group {
+      if presenter.isLoading {
+        loadingIndicator
+      } else if presenter.isError {
+        errorIndicator
+      } else {
+        ZStack() {
+          content
+          HStack {
+            Spacer()
+            VStack {
+              Spacer()
+              uploadButton
+            }
+          }
+        }
+      }
+    }
+    .animation(.linear)
+//    .onAppear {
+//      if presenter.posts.count == 0 {
+//        presenter.getAllPosts()
+//      }
+//    }
+    .fullScreenCover(isPresented: $showUploadview, onDismiss: {
+//      presenter.getAllPosts()
+    }) {
+      presenter.makeUploadView()
     }
   }
 }
 
 extension HomeView {
   
+  var loadingIndicator: some View {
+    VStack {
+      Text("Loading...")
+      ProgressView()
+        .progressViewStyle(CircularProgressViewStyle())
+    }
+  }
+  
+  var errorIndicator: some View {
+    Text(presenter.errorMessage)
+      .foregroundColor(.red)
+      .padding()
+  }
+  
   var content: some View {
     ScrollView {
       VStack {
-        Section(header: Text("HAHAHA")) {
-          ForEach(0 ..< numbers.count) { i in
-            Divider()
-            Text("\(numbers[i])")
-              .padding(0)
-            if i == numbers.last {
-              Divider()
-            }
-          }
+        ForEach(presenter.posts) { post in
+          PostItemView(post: post, last: post == presenter.posts.last ? true : false)
         }
       }
     }
   }
   
-}
-
-struct HomeView_Previews: PreviewProvider {
-  static var previews: some View {
-    HomeView()
+  var uploadButton: some View {
+    Button(action: {
+      showUploadview = true
+    }) {
+      Image(systemName: "square.and.arrow.up")
+        .resizable()
+        .scaledToFit()
+        .foregroundColor(.white)
+        .frame(width: 25)
+        .padding()
+        .background(Circle().foregroundColor(.blue))
+        .padding()
+    }
   }
+  
 }

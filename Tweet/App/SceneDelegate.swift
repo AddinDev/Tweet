@@ -22,12 +22,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     let auth = Authentication()
     
-    let signerUseCase = Injection.init().provideSigner()
+    let injection = Injection.init()
+    
+    let signerUseCase = injection.provideSigner()
     let signUpPresenter = SignInPresenter(useCase: signerUseCase)
+    
+    let homeUseCase = injection.provideHome()
+    let homePresenter = HomePresenter(useCase: homeUseCase)
+    
+    let searchUseCase = injection.provideSearch()
+    let searchPresenter = SearchPresenter(useCase: searchUseCase)
     
     let contentView = ContentView()
       .environmentObject(auth)
       .environmentObject(signUpPresenter)
+      .environmentObject(homePresenter)
+      .environmentObject(searchPresenter)
 
     // Use a UIHostingController as window root view controller.
     if let windowScene = scene as? UIWindowScene {

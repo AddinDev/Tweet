@@ -13,7 +13,7 @@ protocol RemoteDataSourceProtocol {
   func signUp(username: String, email: String, password: String) -> AnyPublisher<Bool, Error>
   func signIn(email: String, password: String) -> AnyPublisher<Bool, Error>
   func getAllPosts() -> AnyPublisher<[PostResponse], Error>
-  func uploadPost(text: String, sender: String, date: String) -> AnyPublisher<Bool, Error>
+  func uploadPost(text: String) -> AnyPublisher<Bool, Error>
 }
 
 final class RemoteDataSource {
@@ -80,7 +80,7 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
   
   func getAllPosts() -> AnyPublisher<[PostResponse], Error> {
     return Future<[PostResponse], Error> { completion in
-      self.db.collection(self.users)
+      self.db.collection(self.posts)
         .getDocuments { snapshot, error in
           if let error = error {
             completion(.failure(error))
@@ -104,14 +104,35 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
     .eraseToAnyPublisher()
   }
   
-  func uploadPost(text: String, sender: String, date: String) -> AnyPublisher<Bool, Error> {
+  func uploadPost(text: String) -> AnyPublisher<Bool, Error> {
     return Future<Bool, Error> { completion in
-      self.db.collection(self.posts)
-        .addDocument(data: [
-          "text": text,
-          "sender": sender,
-          "date": date
-        ])
+      if let userEmail = self.auth.currentUser?.email {
+        self.db.collection(self.users)
+          .document(userEmail)
+          .getDocument { snapshot, error in
+            if let error = error {
+              completion(.failure(error))
+            } else {
+              if let data = snapshot?.data() {
+                if let username = data["username"] as? String {
+                  self.db.collection(self.posts)
+                    .addDocument(data: [
+                      "text": text,
+                      "sender": username,
+                      "date": Date().getFormattedDate(format: "dd/MM/yy")
+                    ]) { error in
+                      if let error = error {
+                        completion(.failure(error))
+                      } else {
+                        completion(.success(true))
+                      }
+                    }
+                }
+              }
+            }
+          }
+      }
+      
     }
     .eraseToAnyPublisher()
   }

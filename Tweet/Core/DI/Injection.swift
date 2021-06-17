@@ -19,4 +19,16 @@ final class Injection {
     return SignerUseCase(repository: provideRepo())
   }
   
+  func provideUpload() -> UploadUseCase {
+    return UploadUseCase(repository: provideRepo())
+  }
+  
+  func provideHome() -> HomeUseCase {
+    return HomeUseCase(repository: provideRepo())
+  }
+  
+  func provideSearch() -> SearchUseCase {
+    return SearchUseCase(repository: provideRepo())
+  }
+  
 }

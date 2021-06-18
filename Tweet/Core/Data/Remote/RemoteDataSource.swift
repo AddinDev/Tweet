@@ -39,7 +39,7 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
       Auth.auth().createUser(withEmail: email, password: password) { result, error in
         if let error = error {
           completion(.failure(error))
-          print("error: \(error.localizedDescription)")
+          print("error: \(error)")
         } else {
           self.db.collection(self.users)
             .document(email)
@@ -53,10 +53,6 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
                 completion(.success(true))
               }
             }
-          if let result = result {
-            let user = result.user
-            print("user: \(user)")
-          }
         }
       }
     }
@@ -68,12 +64,8 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
       Auth.auth().signIn(withEmail: email, password: password) { result, error in
         if let error = error {
           completion(.failure(error))
-          print("error: \(error.localizedDescription)")
+          print("error: \(error)")
         } else {
-          if let result = result {
-            let user = result.user
-            print("user: \(user)")
-          }
           completion(.success(true))
         }
       }
@@ -88,7 +80,7 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
         completion(.success(true))
       } catch let error {
         completion(.failure(error))
-        print("error: \(error.localizedDescription)")
+        print("error: \(error)")
       }
     }
     .eraseToAnyPublisher()
@@ -100,7 +92,7 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
         .getDocuments { snapshot, error in
           if let error = error {
             completion(.failure(error))
-            print("error: \(error.localizedDescription)")
+            print("error: \(error)")
           } else {
             if let snapshot = snapshot {
               var posts: [PostResponse] = []
@@ -129,7 +121,7 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
           .getDocument { snapshot, error in
             if let error = error {
               completion(.failure(error))
-              print("error: \(error.localizedDescription)")
+              print("error: \(error)")
             } else {
               if let data = snapshot?.data() {
                 if let username = data["username"] as? String {
@@ -142,7 +134,7 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
                     ]) { error in
                       if let error = error {
                         completion(.failure(error))
-                        print("error: \(error.localizedDescription)")
+                        print("error: \(error)")
                       } else {
                         completion(.success(true))
                       }

@@ -12,12 +12,13 @@ import Firebase
 protocol RemoteDataSourceProtocol {
   func signUp(username: String, email: String, password: String) -> AnyPublisher<Bool, Error>
   func signIn(email: String, password: String) -> AnyPublisher<Bool, Error>
+  func signOut() -> AnyPublisher<Bool, Error>
   func getAllPosts() -> AnyPublisher<[PostResponse], Error>
   func uploadPost(text: String) -> AnyPublisher<Bool, Error>
 }
 
 final class RemoteDataSource {
-  
+    
   private let db = Firestore.firestore()
   private let auth = Auth.auth()
   private let users = "Users"
@@ -38,6 +39,7 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
       Auth.auth().createUser(withEmail: email, password: password) { result, error in
         if let error = error {
           completion(.failure(error))
+          print("error: \(error.localizedDescription)")
         } else {
           self.db.collection(self.users)
             .document(email)
@@ -66,6 +68,7 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
       Auth.auth().signIn(withEmail: email, password: password) { result, error in
         if let error = error {
           completion(.failure(error))
+          print("error: \(error.localizedDescription)")
         } else {
           if let result = result {
             let user = result.user
@@ -78,12 +81,26 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
     .eraseToAnyPublisher()
   }
   
+  func signOut() -> AnyPublisher<Bool, Error> {
+    return Future<Bool, Error> { completion in
+      do {
+        try self.auth.signOut()
+        completion(.success(true))
+      } catch let error {
+        completion(.failure(error))
+        print("error: \(error.localizedDescription)")
+      }
+    }
+    .eraseToAnyPublisher()
+  }
+  
   func getAllPosts() -> AnyPublisher<[PostResponse], Error> {
     return Future<[PostResponse], Error> { completion in
       self.db.collection(self.posts)
         .getDocuments { snapshot, error in
           if let error = error {
             completion(.failure(error))
+            print("error: \(error.localizedDescription)")
           } else {
             if let snapshot = snapshot {
               var posts: [PostResponse] = []
@@ -112,6 +129,7 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
           .getDocument { snapshot, error in
             if let error = error {
               completion(.failure(error))
+              print("error: \(error.localizedDescription)")
             } else {
               if let data = snapshot?.data() {
                 if let username = data["username"] as? String {
@@ -119,10 +137,12 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
                     .addDocument(data: [
                       "text": text,
                       "sender": username,
+                      "email": userEmail,
                       "date": Date().getFormattedDate(format: "dd/MM/yy")
                     ]) { error in
                       if let error = error {
                         completion(.failure(error))
+                        print("error: \(error.localizedDescription)")
                       } else {
                         completion(.success(true))
                       }

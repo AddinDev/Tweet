@@ -23,6 +23,10 @@ final class Injection {
     return UploadUseCase(repository: provideRepo())
   }
   
+  func provideSettings() -> SettingsUseCase {
+    return SettingsUseCase(repository: provideRepo())
+  }
+  
   func provideHome() -> HomeUseCase {
     return HomeUseCase(repository: provideRepo())
   }

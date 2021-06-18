@@ -22,10 +22,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     let auth = Authentication()
     
+    let user = User()
+    
     let injection = Injection.init()
     
     let signerUseCase = injection.provideSigner()
     let signUpPresenter = SignInPresenter(useCase: signerUseCase)
+    
+    let settingsUseCase = injection.provideSettings()
+    let settingsPresenter = SettingsPresenter(useCase: settingsUseCase)
     
     let homeUseCase = injection.provideHome()
     let homePresenter = HomePresenter(useCase: homeUseCase)
@@ -35,7 +40,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     let contentView = ContentView()
       .environmentObject(auth)
+      .environmentObject(user)
       .environmentObject(signUpPresenter)
+      .environmentObject(settingsPresenter)
       .environmentObject(homePresenter)
       .environmentObject(searchPresenter)
 

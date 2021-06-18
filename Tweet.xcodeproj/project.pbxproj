@@ -12,6 +12,9 @@
 		045D40CF267B996000B179AB /* SearchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045D40CE267B996000B179AB /* SearchUseCase.swift */; };
 		045D40D4267B998F00B179AB /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045D40D3267B998F00B179AB /* SearchView.swift */; };
 		045D40D6267B99A000B179AB /* SearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045D40D5267B99A000B179AB /* SearchPresenter.swift */; };
+		047FE9FD267C87C200689E5D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FE9FC267C87C200689E5D /* User.swift */; };
+		047FE9FF267C97B900689E5D /* SettingsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FE9FE267C97B900689E5D /* SettingsUseCase.swift */; };
+		047FEA02267C97EF00689E5D /* SettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEA01267C97EF00689E5D /* SettingsPresenter.swift */; };
 		04AC23042679C92C004DD51F /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AC23032679C92C004DD51F /* Repository.swift */; };
 		04AC23072679C955004DD51F /* LocaleDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AC23062679C955004DD51F /* LocaleDataSource.swift */; };
 		04AC230A2679C96B004DD51F /* RemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AC23092679C96B004DD51F /* RemoteDataSource.swift */; };
@@ -72,6 +75,9 @@
 		045D40CE267B996000B179AB /* SearchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUseCase.swift; sourceTree = "<group>"; };
 		045D40D3267B998F00B179AB /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		045D40D5267B99A000B179AB /* SearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPresenter.swift; sourceTree = "<group>"; };
+		047FE9FC267C87C200689E5D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		047FE9FE267C97B900689E5D /* SettingsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUseCase.swift; sourceTree = "<group>"; };
+		047FEA01267C97EF00689E5D /* SettingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPresenter.swift; sourceTree = "<group>"; };
 		04AC23032679C92C004DD51F /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		04AC23062679C955004DD51F /* LocaleDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleDataSource.swift; sourceTree = "<group>"; };
 		04AC23092679C96B004DD51F /* RemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDataSource.swift; sourceTree = "<group>"; };
@@ -172,6 +178,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		047FEA00267C97E800689E5D /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				047FEA01267C97EF00689E5D /* SettingsPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
 		04AC23082679C959004DD51F /* Entity */ = {
 			isa = PBXGroup;
 			children = (
@@ -233,6 +247,7 @@
 			isa = PBXGroup;
 			children = (
 				04B051A3267B341C00EBAE2A /* Authentication.swift */,
+				047FE9FC267C87C200689E5D /* User.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -310,6 +325,7 @@
 			isa = PBXGroup;
 			children = (
 				04B051C1267B4F2100EBAE2A /* View */,
+				047FEA00267C97E800689E5D /* Presenter */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -512,6 +528,7 @@
 				04B051BA267B458200EBAE2A /* UploadUseCase.swift */,
 				04B051BE267B483900EBAE2A /* HomeUseCase.swift */,
 				045D40CE267B996000B179AB /* SearchUseCase.swift */,
+				047FE9FE267C97B900689E5D /* SettingsUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -839,11 +856,13 @@
 				04AC23072679C955004DD51F /* LocaleDataSource.swift in Sources */,
 				045D40D6267B99A000B179AB /* SearchPresenter.swift in Sources */,
 				04AC230A2679C96B004DD51F /* RemoteDataSource.swift in Sources */,
+				047FE9FD267C87C200689E5D /* User.swift in Sources */,
 				045D40D4267B998F00B179AB /* SearchView.swift in Sources */,
 				04AC231B2679D530004DD51F /* Injection.swift in Sources */,
 				04B74DEA267A37CF00454E89 /* PostModel.swift in Sources */,
 				04C5BFAA267308F7004E02DE /* AppDelegate.swift in Sources */,
 				04B051BF267B483900EBAE2A /* HomeUseCase.swift in Sources */,
+				047FE9FF267C97B900689E5D /* SettingsUseCase.swift in Sources */,
 				04C5BFEE267309EF004E02DE /* HomeView.swift in Sources */,
 				04B74DED267A426F00454E89 /* PostMapper.swift in Sources */,
 				04AC23042679C92C004DD51F /* Repository.swift in Sources */,
@@ -862,6 +881,7 @@
 				045D40CB267B88F500B179AB /* PostItemView.swift in Sources */,
 				04AC23162679CBE2004DD51F /* SignUpPresenter.swift in Sources */,
 				04C5BFAE267308F7004E02DE /* ContentView.swift in Sources */,
+				047FEA02267C97EF00689E5D /* SettingsPresenter.swift in Sources */,
 				04AC231D2679D5D0004DD51F /* SignerUseCase.swift in Sources */,
 				045D40CD267B94FB00B179AB /* Date.swift in Sources */,
 				04B051A4267B341C00EBAE2A /* Authentication.swift in Sources */,

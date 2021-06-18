@@ -11,6 +11,7 @@ import Combine
 protocol RepositoryProtocol {
   func signUp(username: String, email: String, password: String) -> AnyPublisher<Bool, Error>
   func signIn(email: String, password: String) -> AnyPublisher<Bool, Error>
+  func signOut() -> AnyPublisher<Bool, Error>
   func getAllPosts() -> AnyPublisher<[PostModel], Error>
   func uploadPost(text: String) -> AnyPublisher<Bool, Error>
 }
@@ -38,6 +39,10 @@ extension Repository: RepositoryProtocol {
   
   func signIn(email: String, password: String) -> AnyPublisher<Bool, Error> {
     self.remote.signIn(email: email, password: password)
+  }
+  
+  func signOut() -> AnyPublisher<Bool, Error> {
+    self.remote.signOut()
   }
   
   func getAllPosts() -> AnyPublisher<[PostModel], Error> {

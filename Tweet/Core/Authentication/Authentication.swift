@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct User: Codable {
-  var username: String = ""
+struct Log: Codable {
+
   private var signedIn: Bool = false
   
   var hasSignedIn: Bool {
@@ -26,7 +26,7 @@ struct AuthDataStore {
   static let shared = AuthDataStore()
   private let key = "tweet.savedUser"
   
-  func save(_ user: User) {
+  func save(_ user: Log) {
     let encoder = JSONEncoder()
     if let encoded = try? encoder.encode(user) {
       let defaults = UserDefaults.standard
@@ -34,15 +34,15 @@ struct AuthDataStore {
     }
   }
   
-  func load() -> User {
+  func load() -> Log {
     let defaults = UserDefaults.standard
     if let savedUser = defaults.object(forKey: key) as? Data {
       let decoder = JSONDecoder()
-      if let loadedUser = try? decoder.decode(User.self, from: savedUser) {
+      if let loadedUser = try? decoder.decode(Log.self, from: savedUser) {
         return loadedUser
       }
     }
-    return User() // instantiate a new User and return
+    return Log() // instantiate a new User and return
     // if it's not stored previously
   }
   
@@ -53,21 +53,17 @@ struct AuthDataStore {
   
 }
 
-class Authentication : NSObject, ObservableObject {
+class Authentication: User {
   
   @Published private var user = AuthDataStore.shared.load()
   
-  var hasSignedIn : Bool {
-    get{
+  var hasSignedIn: Bool {
+    get {
       user.hasSignedIn
     }
-    set(newHasSignedIn){
+    set(newHasSignedIn) {
       user.hasSignedIn = newHasSignedIn
     }
-  }
-  
-  var username : String {
-    user.username
   }
   
 }
@@ -77,11 +73,13 @@ extension Authentication {
   func signIn() {
     self.user.hasSignedIn = true
     AuthDataStore.shared.save(user)
+    super.reload()
   }
   
   func signOut(){
     self.user.hasSignedIn = false
     AuthDataStore.shared.removeUser()
+    super.remove()
   }
   
 }

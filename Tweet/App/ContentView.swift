@@ -11,6 +11,7 @@ struct ContentView: View {
   
   @EnvironmentObject var auth: Authentication
   @EnvironmentObject var signInPresenter: SignInPresenter
+  @EnvironmentObject var settingsPresenter: SettingsPresenter
   @EnvironmentObject var homePresenter: HomePresenter
   @EnvironmentObject var searchPresenter: SearchPresenter
   
@@ -36,7 +37,7 @@ extension ContentView {
   
   var main: some View {
     TabView(selection: $selected) {
-      SettingsView()
+      SettingsView(presenter: settingsPresenter)
         .tabItem {
           Image(systemName: "gear")
         }

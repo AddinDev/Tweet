@@ -24,9 +24,9 @@ struct SearchView: View {
     }
     .animation(.linear)
     .onAppear {
-      if presenter.posts.count == 0 {
+//      if presenter.posts.count == 0 {
         presenter.getAllPosts()
-      }
+//      }
     }
   }
 }

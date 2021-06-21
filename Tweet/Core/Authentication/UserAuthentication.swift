@@ -8,11 +8,13 @@
 import Foundation
 import Firebase
 
-class User: ObservableObject {
+class UserAuthentication: ObservableObject {
       
   @Published var email: String = ""
   @Published var username: String = ""
   @Published var photoUrl: String?
+  
+  @Published var user: UserModel = UserModel()
   
   init() {
     load()
@@ -43,6 +45,7 @@ class User: ObservableObject {
                 self.email = email
                 self.username = username
                 self.photoUrl = photoUrl
+                self.user = UserModel(id: "currentUser", email: email, username: username, photoUrl: photoUrl)
                 print("user: \(email) \(username) \(photoUrl ?? "potokosong")")
               }
             }

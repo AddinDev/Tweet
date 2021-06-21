@@ -27,10 +27,10 @@ class HomePresenter: ObservableObject {
     
     
     self.posts = [
-      PostModel(id: UUID().uuidString, sender: "udin", text: "mk3 supra is cool", date: "11 april"),
-      PostModel(id: UUID().uuidString, sender: "udin", text: "mk3 supra is cool", date: "11 april"),
-      PostModel(id: UUID().uuidString, sender: "udin", text: "mk3 supra is cool", date: "11 april"),
-      PostModel(id: UUID().uuidString, sender: "udin", text: "mk3 supra is cool", date: "11 april")
+      PostModel(id: UUID().uuidString, sender: "udin", email: "a", text: "mk3 supra is cool", date: "11 april"),
+      PostModel(id: UUID().uuidString, sender: "udin", email: "a", text: "mk3 supra is cool", date: "11 april"),
+      PostModel(id: UUID().uuidString, sender: "udin", email: "a", text: "mk3 supra is cool", date: "11 april"),
+      PostModel(id: UUID().uuidString, sender: "udin", email: "a", text: "mk3 supra is cool", date: "11 april")
     ]
   }
   

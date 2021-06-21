@@ -22,11 +22,11 @@ class UploadPresenter: ObservableObject {
     self.useCase = useCase
   }
   
-  func upload(text: String, action: @escaping () -> Void) {
+  func upload(_ user: UserModel, text: String, action: @escaping () -> Void) {
     self.isLoading = true
     self.isError = false
     self.errorMessage = ""
-    useCase.uploadPost(text: text)
+    useCase.uploadPost(user: user, text: text)
       .sink { completion in
         switch completion {
         case .failure(let error):

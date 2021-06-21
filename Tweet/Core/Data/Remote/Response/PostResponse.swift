@@ -11,6 +11,7 @@ struct PostResponse: Identifiable {
   
   let id: String = UUID().uuidString
   let sender: String
+  let email: String
   let text: String
   let date: String
   

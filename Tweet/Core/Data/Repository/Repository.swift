@@ -12,8 +12,11 @@ protocol RepositoryProtocol {
   func signUp(username: String, email: String, password: String) -> AnyPublisher<Bool, Error>
   func signIn(email: String, password: String) -> AnyPublisher<Bool, Error>
   func signOut() -> AnyPublisher<Bool, Error>
+  
   func getAllPosts() -> AnyPublisher<[PostModel], Error>
-  func uploadPost(text: String) -> AnyPublisher<Bool, Error>
+  func uploadPost(user: UserModel, text: String) -> AnyPublisher<Bool, Error>
+  
+  func follow(this currentUser: UserModel, for user: UserModel) -> AnyPublisher<Bool, Error>
 }
 
 final class Repository {
@@ -51,8 +54,12 @@ extension Repository: RepositoryProtocol {
       .eraseToAnyPublisher()
   }
   
-  func uploadPost(text: String) -> AnyPublisher<Bool, Error> {
-    self.remote.uploadPost(text: text)
+  func uploadPost(user: UserModel, text: String) -> AnyPublisher<Bool, Error> {
+    self.remote.uploadPost(user: user, text: text)
+  }
+  
+  func follow(this currentUser: UserModel, for user: UserModel) -> AnyPublisher<Bool, Error> {
+    self.remote.follow(this: currentUser, for: user)
   }
   
 }

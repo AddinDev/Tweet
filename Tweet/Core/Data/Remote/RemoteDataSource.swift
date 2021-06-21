@@ -13,16 +13,22 @@ protocol RemoteDataSourceProtocol {
   func signUp(username: String, email: String, password: String) -> AnyPublisher<Bool, Error>
   func signIn(email: String, password: String) -> AnyPublisher<Bool, Error>
   func signOut() -> AnyPublisher<Bool, Error>
+  
   func getAllPosts() -> AnyPublisher<[PostResponse], Error>
-  func uploadPost(text: String) -> AnyPublisher<Bool, Error>
+  func uploadPost(user: UserModel, text: String) -> AnyPublisher<Bool, Error>
+  
+  func follow(this currentUser: UserModel, for user: UserModel) -> AnyPublisher<Bool, Error>
+  
 }
 
 final class RemoteDataSource {
-    
+  
   private let db = Firestore.firestore()
   private let auth = Auth.auth()
   private let users = "Users"
   private let posts = "Posts"
+  private let following = "Following"
+  private let followers = "Followers"
   
   init() {
     //              >///<
@@ -100,8 +106,9 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
                 let data = doc.data()
                 if let text = data["text"] as? String,
                    let sender = data["sender"] as? String,
+                   let email = data["email"] as? String,
                    let date = data["date"] as? String {
-                  let post = PostResponse(sender: sender, text: text, date: date)
+                  let post = PostResponse(sender: sender, email: email, text: text, date: date)
                   posts.append(post)
                 }
               }
@@ -113,38 +120,57 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
     .eraseToAnyPublisher()
   }
   
-  func uploadPost(text: String) -> AnyPublisher<Bool, Error> {
+  func uploadPost(user: UserModel, text: String) -> AnyPublisher<Bool, Error> {
     return Future<Bool, Error> { completion in
-      if let userEmail = self.auth.currentUser?.email {
-        self.db.collection(self.users)
-          .document(userEmail)
-          .getDocument { snapshot, error in
-            if let error = error {
-              completion(.failure(error))
-              print("error: \(error)")
-            } else {
-              if let data = snapshot?.data() {
-                if let username = data["username"] as? String {
-                  self.db.collection(self.posts)
-                    .addDocument(data: [
-                      "text": text,
-                      "sender": username,
-                      "email": userEmail,
-                      "date": Date().getFormattedDate(format: "dd/MM/yy")
-                    ]) { error in
-                      if let error = error {
-                        completion(.failure(error))
-                        print("error: \(error)")
-                      } else {
-                        completion(.success(true))
-                      }
-                    }
+      self.db.collection(self.posts)
+        .addDocument(data: [
+          "text": text,
+          "sender": user.username,
+          "email": user.email,
+          "date": Date().getFormattedDate(format: "dd/MM/yy")
+        ]) { error in
+          if let error = error {
+            completion(.failure(error))
+            print("error: \(error)")
+          } else {
+            completion(.success(true))
+          }
+        }
+    }
+    .eraseToAnyPublisher()
+  }
+  
+  func follow(this currentUser: UserModel, for user: UserModel) -> AnyPublisher<Bool, Error> {
+    return Future<Bool, Error> { completion in
+      self.db.collection(self.users)
+        .document(currentUser.username)
+        .collection(self.following)
+        .document(user.email)
+        .setData([
+          "email": user.email,
+          "username": user.username
+        ]) { error in
+          if let error = error {
+            completion(.failure(error))
+            print("error: \(error)")
+          } else {
+            self.db.collection(self.users)
+              .document(user.username)
+              .collection(self.followers)
+              .document(currentUser.email)
+              .setData([
+                "email": currentUser.email,
+                "username": currentUser.username
+              ]) { error in
+                if let error = error {
+                  completion(.failure(error))
+                  print("error: \(error)")
+                } else {
+                  completion(.success(true))
                 }
               }
-            }
           }
-      }
-      
+        }
     }
     .eraseToAnyPublisher()
   }

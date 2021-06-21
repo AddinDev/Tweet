@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 protocol UploadUseCaseProtocol {
-  func uploadPost(text: String) -> AnyPublisher<Bool, Error>
+  func uploadPost(user: UserModel, text: String) -> AnyPublisher<Bool, Error>
 }
 
 class UploadUseCase {
@@ -23,8 +23,8 @@ class UploadUseCase {
 
 extension UploadUseCase: UploadUseCaseProtocol {
   
-  func uploadPost(text: String) -> AnyPublisher<Bool, Error> {
-    self.repository.uploadPost(text: text)
+  func uploadPost(user: UserModel, text: String) -> AnyPublisher<Bool, Error> {
+    self.repository.uploadPost(user: user, text: text)
   }
   
 }

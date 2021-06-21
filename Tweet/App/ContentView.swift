@@ -27,7 +27,9 @@ extension ContentView {
   var content: some View {
     Group {
       if auth.hasSignedIn {
+        NavigationView {
         main
+        }
       } else {
         signer
       }

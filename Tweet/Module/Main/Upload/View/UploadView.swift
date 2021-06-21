@@ -11,6 +11,8 @@ struct UploadView: View {
   
   @Environment(\.presentationMode) var presentationMode
   
+  @EnvironmentObject var user: Authentication
+  
   @ObservedObject var presenter: UploadPresenter
   
   @State private var text = ""
@@ -71,7 +73,7 @@ extension UploadView {
   
   var doneButton: some View {
     Button(action: {
-      presenter.upload(text: text) {
+      presenter.upload(user.user, text: text) {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         self.presentationMode.wrappedValue.dismiss()
       }

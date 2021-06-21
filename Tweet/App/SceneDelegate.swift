@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     let auth = Authentication()
     
-    let user = User()
+    let user = UserAuthentication()
     
     let injection = Injection.init()
     

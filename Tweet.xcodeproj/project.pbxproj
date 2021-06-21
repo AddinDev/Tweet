@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,7 +12,7 @@
 		045D40CF267B996000B179AB /* SearchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045D40CE267B996000B179AB /* SearchUseCase.swift */; };
 		045D40D4267B998F00B179AB /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045D40D3267B998F00B179AB /* SearchView.swift */; };
 		045D40D6267B99A000B179AB /* SearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045D40D5267B99A000B179AB /* SearchPresenter.swift */; };
-		047FE9FD267C87C200689E5D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FE9FC267C87C200689E5D /* User.swift */; };
+		047FE9FD267C87C200689E5D /* UserAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FE9FC267C87C200689E5D /* UserAuthentication.swift */; };
 		047FE9FF267C97B900689E5D /* SettingsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FE9FE267C97B900689E5D /* SettingsUseCase.swift */; };
 		047FEA02267C97EF00689E5D /* SettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEA01267C97EF00689E5D /* SettingsPresenter.swift */; };
 		04AC23042679C92C004DD51F /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AC23032679C92C004DD51F /* Repository.swift */; };
@@ -29,7 +29,6 @@
 		04B051AB267B385000EBAE2A /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B051AA267B385000EBAE2A /* SignInView.swift */; };
 		04B051AE267B3A0F00EBAE2A /* SignInRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B051AD267B3A0F00EBAE2A /* SignInRouter.swift */; };
 		04B051B4267B3FAF00EBAE2A /* UploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B051B3267B3FAF00EBAE2A /* UploadView.swift */; };
-		04B051B7267B406300EBAE2A /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = 04B051B6267B406300EBAE2A /* SwiftUIX */; };
 		04B051B9267B454200EBAE2A /* UploadPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B051B8267B454200EBAE2A /* UploadPresenter.swift */; };
 		04B051BB267B458200EBAE2A /* UploadUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B051BA267B458200EBAE2A /* UploadUseCase.swift */; };
 		04B051BD267B475B00EBAE2A /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B051BC267B475B00EBAE2A /* HomeRouter.swift */; };
@@ -47,6 +46,9 @@
 		04C5BFC1267308F9004E02DE /* TweetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C5BFC0267308F9004E02DE /* TweetTests.swift */; };
 		04C5BFCC267308F9004E02DE /* TweetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C5BFCB267308F9004E02DE /* TweetUITests.swift */; };
 		04C5BFEE267309EF004E02DE /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C5BFED267309EF004E02DE /* HomeView.swift */; };
+		04C65F822680808A00603B32 /* PostRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C65F812680808A00603B32 /* PostRouter.swift */; };
+		04C65F85268080A100603B32 /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C65F84268080A100603B32 /* PostDetailView.swift */; };
+		04C65F872680828400603B32 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C65F862680828400603B32 /* UserModel.swift */; };
 		44F6E53754FB0A35462DCD52 /* Pods_TweetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F57841B00B3095697F84840 /* Pods_TweetTests.framework */; };
 		5E4F2CCECD7D200FE81B7B2F /* Pods_Tweet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F967266018EB9A8B29155EE1 /* Pods_Tweet.framework */; };
 		6CF3E3124D48BC2CD55E444F /* Pods_Tweet_TweetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33586FEB29FEF012CBD1AB25 /* Pods_Tweet_TweetUITests.framework */; };
@@ -75,7 +77,7 @@
 		045D40CE267B996000B179AB /* SearchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUseCase.swift; sourceTree = "<group>"; };
 		045D40D3267B998F00B179AB /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		045D40D5267B99A000B179AB /* SearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPresenter.swift; sourceTree = "<group>"; };
-		047FE9FC267C87C200689E5D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		047FE9FC267C87C200689E5D /* UserAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthentication.swift; sourceTree = "<group>"; };
 		047FE9FE267C97B900689E5D /* SettingsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUseCase.swift; sourceTree = "<group>"; };
 		047FEA01267C97EF00689E5D /* SettingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPresenter.swift; sourceTree = "<group>"; };
 		04AC23032679C92C004DD51F /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
@@ -115,6 +117,9 @@
 		04C5BFCB267308F9004E02DE /* TweetUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetUITests.swift; sourceTree = "<group>"; };
 		04C5BFCD267308F9004E02DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04C5BFED267309EF004E02DE /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		04C65F812680808A00603B32 /* PostRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRouter.swift; sourceTree = "<group>"; };
+		04C65F84268080A100603B32 /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
+		04C65F862680828400603B32 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		13AB6BA83F86D8930C70824C /* Pods-Tweet-TweetUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tweet-TweetUITests.release.xcconfig"; path = "Target Support Files/Pods-Tweet-TweetUITests/Pods-Tweet-TweetUITests.release.xcconfig"; sourceTree = "<group>"; };
 		33586FEB29FEF012CBD1AB25 /* Pods_Tweet_TweetUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tweet_TweetUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		69F0F1D1E116F0F66DD07BA6 /* Pods-TweetTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TweetTests.debug.xcconfig"; path = "Target Support Files/Pods-TweetTests/Pods-TweetTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -132,7 +137,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E4F2CCECD7D200FE81B7B2F /* Pods_Tweet.framework in Frameworks */,
-				04B051B7267B406300EBAE2A /* SwiftUIX in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,7 +251,7 @@
 			isa = PBXGroup;
 			children = (
 				04B051A3267B341C00EBAE2A /* Authentication.swift */,
-				047FE9FC267C87C200689E5D /* User.swift */,
+				047FE9FC267C87C200689E5D /* UserAuthentication.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -461,6 +465,7 @@
 		04C5BFDE26730961004E02DE /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				04C65F7E2680803E00603B32 /* Post */,
 				04B051C0267B4E8700EBAE2A /* Settings */,
 				04C5BFDD26730957004E02DE /* Home */,
 				04B051B0267B3F8A00EBAE2A /* Upload */,
@@ -490,6 +495,7 @@
 			isa = PBXGroup;
 			children = (
 				04B74DE9267A37CF00454E89 /* PostModel.swift */,
+				04C65F862680828400603B32 /* UserModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -579,7 +585,56 @@
 			isa = PBXGroup;
 			children = (
 				04C5BFED267309EF004E02DE /* HomeView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		04C65F7E2680803E00603B32 /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				04C65F882680870500603B32 /* Item */,
+				04C65F832680809100603B32 /* Detail */,
+			);
+			path = Post;
+			sourceTree = "<group>";
+		};
+		04C65F7F2680806C00603B32 /* View */ = {
+			isa = PBXGroup;
+			children = (
 				045D40CA267B88F500B179AB /* PostItemView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		04C65F802680807700603B32 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				04C65F812680808A00603B32 /* PostRouter.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		04C65F832680809100603B32 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				04C65F892680871400603B32 /* View */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		04C65F882680870500603B32 /* Item */ = {
+			isa = PBXGroup;
+			children = (
+				04C65F802680807700603B32 /* Router */,
+				04C65F7F2680806C00603B32 /* View */,
+			);
+			path = Item;
+			sourceTree = "<group>";
+		};
+		04C65F892680871400603B32 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				04C65F84268080A100603B32 /* PostDetailView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -626,7 +681,6 @@
 			);
 			name = Tweet;
 			packageProductDependencies = (
-				04B051B6267B406300EBAE2A /* SwiftUIX */,
 			);
 			productName = Tweet;
 			productReference = 04C5BFA6267308F7004E02DE /* Tweet.app */;
@@ -703,7 +757,6 @@
 			);
 			mainGroup = 04C5BF9D267308F7004E02DE;
 			packageReferences = (
-				04B051B5267B406300EBAE2A /* XCRemoteSwiftPackageReference "SwiftUIX" */,
 			);
 			productRefGroup = 04C5BFA7267308F7004E02DE /* Products */;
 			projectDirPath = "";
@@ -856,14 +909,16 @@
 				04AC23072679C955004DD51F /* LocaleDataSource.swift in Sources */,
 				045D40D6267B99A000B179AB /* SearchPresenter.swift in Sources */,
 				04AC230A2679C96B004DD51F /* RemoteDataSource.swift in Sources */,
-				047FE9FD267C87C200689E5D /* User.swift in Sources */,
+				047FE9FD267C87C200689E5D /* UserAuthentication.swift in Sources */,
 				045D40D4267B998F00B179AB /* SearchView.swift in Sources */,
 				04AC231B2679D530004DD51F /* Injection.swift in Sources */,
 				04B74DEA267A37CF00454E89 /* PostModel.swift in Sources */,
 				04C5BFAA267308F7004E02DE /* AppDelegate.swift in Sources */,
 				04B051BF267B483900EBAE2A /* HomeUseCase.swift in Sources */,
 				047FE9FF267C97B900689E5D /* SettingsUseCase.swift in Sources */,
+				04C65F85268080A100603B32 /* PostDetailView.swift in Sources */,
 				04C5BFEE267309EF004E02DE /* HomeView.swift in Sources */,
+				04C65F822680808A00603B32 /* PostRouter.swift in Sources */,
 				04B74DED267A426F00454E89 /* PostMapper.swift in Sources */,
 				04AC23042679C92C004DD51F /* Repository.swift in Sources */,
 				04B051A9267B384500EBAE2A /* SignInPresenter.swift in Sources */,
@@ -884,6 +939,7 @@
 				047FEA02267C97EF00689E5D /* SettingsPresenter.swift in Sources */,
 				04AC231D2679D5D0004DD51F /* SignerUseCase.swift in Sources */,
 				045D40CD267B94FB00B179AB /* Date.swift in Sources */,
+				04C65F872680828400603B32 /* UserModel.swift in Sources */,
 				04B051A4267B341C00EBAE2A /* Authentication.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1219,25 +1275,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		04B051B5267B406300EBAE2A /* XCRemoteSwiftPackageReference "SwiftUIX" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwiftUIX/SwiftUIX.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.0.7;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		04B051B6267B406300EBAE2A /* SwiftUIX */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 04B051B5267B406300EBAE2A /* XCRemoteSwiftPackageReference "SwiftUIX" */;
-			productName = SwiftUIX;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 04C5BF9E267308F7004E02DE /* Project object */;
 }

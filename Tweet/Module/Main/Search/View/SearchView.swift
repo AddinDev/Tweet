@@ -11,7 +11,6 @@ struct SearchView: View {
   
   @ObservedObject var presenter: SearchPresenter
     
-  
   var body: some View {
     Group {
       if presenter.isLoading {

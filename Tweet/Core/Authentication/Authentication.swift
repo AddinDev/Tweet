@@ -53,16 +53,16 @@ struct AuthDataStore {
   
 }
 
-class Authentication: User {
+class Authentication: UserAuthentication {
   
-  @Published private var user = AuthDataStore.shared.load()
+  @Published private var auth = AuthDataStore.shared.load()
   
   var hasSignedIn: Bool {
     get {
-      user.hasSignedIn
+      auth.hasSignedIn
     }
     set(newHasSignedIn) {
-      user.hasSignedIn = newHasSignedIn
+      auth.hasSignedIn = newHasSignedIn
     }
   }
   
@@ -71,13 +71,13 @@ class Authentication: User {
 extension Authentication {
   
   func signIn() {
-    self.user.hasSignedIn = true
-    AuthDataStore.shared.save(user)
+    self.auth.hasSignedIn = true
+    AuthDataStore.shared.save(auth)
     super.reload()
   }
   
   func signOut(){
-    self.user.hasSignedIn = false
+    self.auth.hasSignedIn = false
     AuthDataStore.shared.removeUser()
     super.remove()
   }

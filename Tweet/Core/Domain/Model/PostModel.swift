@@ -11,6 +11,7 @@ struct PostModel: Identifiable, Equatable {
   
   let id: String
   let sender: String
+  let email: String
   let text: String
   let date: String
   

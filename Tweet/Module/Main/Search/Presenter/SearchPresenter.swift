@@ -10,6 +10,7 @@ import Combine
 
 class SearchPresenter: ObservableObject {
     
+  private var router = SearchRouter()
   private var useCase: SearchUseCase
   
   @Published var posts: [PostModel] = []
@@ -50,6 +51,10 @@ class SearchPresenter: ObservableObject {
         self.posts = posts
       }
       .store(in: &cancellables)
+  }
+  
+  func linkToDetail<Content: View>(post: PostModel, @ViewBuilder content: () -> Content) -> some View {
+    NavigationLink(destination: router.makeDetailView(post: post)) { content() }
   }
   
 }

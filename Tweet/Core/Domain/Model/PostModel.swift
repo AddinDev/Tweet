@@ -9,10 +9,13 @@ import Foundation
 
 struct PostModel: Identifiable, Equatable {
   
+  static func == (lhs: PostModel, rhs: PostModel) -> Bool {
+    return true
+  }
+  
   let id: String
-  let sender: String
-  let email: String
   let text: String
   let date: String
+  let user: UserModel
   
 }

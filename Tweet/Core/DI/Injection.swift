@@ -35,4 +35,8 @@ final class Injection {
     return SearchUseCase(repository: provideRepo())
   }
   
+  func provideProfile() -> ProfileUseCase {
+    return ProfileUseCase(repository: provideRepo())
+  }
+  
 }

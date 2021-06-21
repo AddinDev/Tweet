@@ -9,16 +9,13 @@ import SwiftUI
 
 struct PostItemView: View {
   
-  var router = PostItemRouter()
   
   var post: PostModel
   var last: Bool
   
   var body: some View {
-    linkBuilder(post: post) {
       content
         .foregroundColor(.primary)
-    }
   }
   
 }
@@ -30,7 +27,7 @@ extension PostItemView {
       Divider()
       VStack(alignment: .leading) {
         HStack {
-          Text(post.sender)
+          Text(post.user.username)
             .font(.headline)
           Spacer()
           Text(post.date)
@@ -44,10 +41,6 @@ extension PostItemView {
         Divider()
       }
     }
-  }
-  
-  func linkBuilder<Content: View>(post: PostModel, @ViewBuilder content: () -> Content) -> some View {
-    NavigationLink(destination: router.makeDetailView(post: post)) { content() }
   }
   
 }

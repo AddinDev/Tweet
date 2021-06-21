@@ -49,6 +49,11 @@
 		04C65F822680808A00603B32 /* PostRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C65F812680808A00603B32 /* PostRouter.swift */; };
 		04C65F85268080A100603B32 /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C65F84268080A100603B32 /* PostDetailView.swift */; };
 		04C65F872680828400603B32 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C65F862680828400603B32 /* UserModel.swift */; };
+		04C65F8E268090E500603B32 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C65F8D268090E500603B32 /* ProfileView.swift */; };
+		04C65F902680913100603B32 /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C65F8F2680913100603B32 /* ProfilePresenter.swift */; };
+		04C65F922680917500603B32 /* ProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C65F912680917500603B32 /* ProfileUseCase.swift */; };
+		04C65F952680982100603B32 /* PostDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C65F942680982100603B32 /* PostDetailRouter.swift */; };
+		04C65F972680996400603B32 /* SearchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C65F962680996400603B32 /* SearchRouter.swift */; };
 		44F6E53754FB0A35462DCD52 /* Pods_TweetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F57841B00B3095697F84840 /* Pods_TweetTests.framework */; };
 		5E4F2CCECD7D200FE81B7B2F /* Pods_Tweet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F967266018EB9A8B29155EE1 /* Pods_Tweet.framework */; };
 		6CF3E3124D48BC2CD55E444F /* Pods_Tweet_TweetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33586FEB29FEF012CBD1AB25 /* Pods_Tweet_TweetUITests.framework */; };
@@ -120,6 +125,11 @@
 		04C65F812680808A00603B32 /* PostRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRouter.swift; sourceTree = "<group>"; };
 		04C65F84268080A100603B32 /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
 		04C65F862680828400603B32 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		04C65F8D268090E500603B32 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		04C65F8F2680913100603B32 /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
+		04C65F912680917500603B32 /* ProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUseCase.swift; sourceTree = "<group>"; };
+		04C65F942680982100603B32 /* PostDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailRouter.swift; sourceTree = "<group>"; };
+		04C65F962680996400603B32 /* SearchRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRouter.swift; sourceTree = "<group>"; };
 		13AB6BA83F86D8930C70824C /* Pods-Tweet-TweetUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tweet-TweetUITests.release.xcconfig"; path = "Target Support Files/Pods-Tweet-TweetUITests/Pods-Tweet-TweetUITests.release.xcconfig"; sourceTree = "<group>"; };
 		33586FEB29FEF012CBD1AB25 /* Pods_Tweet_TweetUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tweet_TweetUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		69F0F1D1E116F0F66DD07BA6 /* Pods-TweetTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TweetTests.debug.xcconfig"; path = "Target Support Files/Pods-TweetTests/Pods-TweetTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -162,6 +172,7 @@
 		045D40D0267B997B00B179AB /* Router */ = {
 			isa = PBXGroup;
 			children = (
+				04C65F962680996400603B32 /* SearchRouter.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -465,6 +476,7 @@
 		04C5BFDE26730961004E02DE /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				04C65F8A268090D200603B32 /* Profile */,
 				04C65F7E2680803E00603B32 /* Post */,
 				04B051C0267B4E8700EBAE2A /* Settings */,
 				04C5BFDD26730957004E02DE /* Home */,
@@ -535,6 +547,7 @@
 				04B051BE267B483900EBAE2A /* HomeUseCase.swift */,
 				045D40CE267B996000B179AB /* SearchUseCase.swift */,
 				047FE9FE267C97B900689E5D /* SettingsUseCase.swift */,
+				04C65F912680917500603B32 /* ProfileUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -617,6 +630,7 @@
 		04C65F832680809100603B32 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				04C65F932680981300603B32 /* Router */,
 				04C65F892680871400603B32 /* View */,
 			);
 			path = Detail;
@@ -637,6 +651,39 @@
 				04C65F84268080A100603B32 /* PostDetailView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		04C65F8A268090D200603B32 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				04C65F8C268090DD00603B32 /* View */,
+				04C65F8B268090D900603B32 /* Presenter */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		04C65F8B268090D900603B32 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				04C65F8F2680913100603B32 /* ProfilePresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		04C65F8C268090DD00603B32 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				04C65F8D268090E500603B32 /* ProfileView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		04C65F932680981300603B32 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				04C65F942680982100603B32 /* PostDetailRouter.swift */,
+			);
+			path = Router;
 			sourceTree = "<group>";
 		};
 		74E9D41D1ED4D498D89CB34D /* Frameworks */ = {
@@ -911,10 +958,13 @@
 				04AC230A2679C96B004DD51F /* RemoteDataSource.swift in Sources */,
 				047FE9FD267C87C200689E5D /* UserAuthentication.swift in Sources */,
 				045D40D4267B998F00B179AB /* SearchView.swift in Sources */,
+				04C65F8E268090E500603B32 /* ProfileView.swift in Sources */,
 				04AC231B2679D530004DD51F /* Injection.swift in Sources */,
 				04B74DEA267A37CF00454E89 /* PostModel.swift in Sources */,
+				04C65F972680996400603B32 /* SearchRouter.swift in Sources */,
 				04C5BFAA267308F7004E02DE /* AppDelegate.swift in Sources */,
 				04B051BF267B483900EBAE2A /* HomeUseCase.swift in Sources */,
+				04C65F952680982100603B32 /* PostDetailRouter.swift in Sources */,
 				047FE9FF267C97B900689E5D /* SettingsUseCase.swift in Sources */,
 				04C65F85268080A100603B32 /* PostDetailView.swift in Sources */,
 				04C5BFEE267309EF004E02DE /* HomeView.swift in Sources */,
@@ -932,8 +982,10 @@
 				04AC23132679CBAF004DD51F /* SignUpView.swift in Sources */,
 				04B74DE8267A378100454E89 /* HomePresenter.swift in Sources */,
 				04B051AE267B3A0F00EBAE2A /* SignInRouter.swift in Sources */,
+				04C65F922680917500603B32 /* ProfileUseCase.swift in Sources */,
 				045D40CF267B996000B179AB /* SearchUseCase.swift in Sources */,
 				045D40CB267B88F500B179AB /* PostItemView.swift in Sources */,
+				04C65F902680913100603B32 /* ProfilePresenter.swift in Sources */,
 				04AC23162679CBE2004DD51F /* SignUpPresenter.swift in Sources */,
 				04C5BFAE267308F7004E02DE /* ContentView.swift in Sources */,
 				047FEA02267C97EF00689E5D /* SettingsPresenter.swift in Sources */,

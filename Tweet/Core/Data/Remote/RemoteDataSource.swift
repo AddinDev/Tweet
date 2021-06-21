@@ -17,6 +17,8 @@ protocol RemoteDataSourceProtocol {
   func getAllPosts() -> AnyPublisher<[PostResponse], Error>
   func uploadPost(user: UserModel, text: String) -> AnyPublisher<Bool, Error>
   
+  func getUserPosts(of email: String) -> AnyPublisher<[PostResponse], Error>
+  
   func follow(this currentUser: UserModel, for user: UserModel) -> AnyPublisher<Bool, Error>
   
 }
@@ -134,6 +136,36 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
             print("error: \(error)")
           } else {
             completion(.success(true))
+          }
+        }
+    }
+    .eraseToAnyPublisher()
+  }
+  
+  func getUserPosts(of email: String) -> AnyPublisher<[PostResponse], Error> {
+    return Future<[PostResponse], Error> { completion in
+      self.db.collection(self.posts)
+        .whereField("email", isEqualTo: email)
+        .getDocuments { snapshot, error in
+          if let error = error {
+            completion(.failure(error))
+            print("error: \(error)")
+          } else {
+            if let snapshot = snapshot {
+              var posts: [PostResponse] = []
+              for doc in snapshot.documents {
+                let data = doc.data()
+                if let text = data["text"] as? String,
+                   let sender = data["sender"] as? String,
+                   let email = data["email"] as? String,
+                   let date = data["date"] as? String {
+                  let post = PostResponse(sender: sender, email: email, text: text, date: date)
+                  posts.append(post)
+                }
+              }
+              print("posts: \(posts)")
+              completion(.success(posts))
+            }
           }
         }
     }

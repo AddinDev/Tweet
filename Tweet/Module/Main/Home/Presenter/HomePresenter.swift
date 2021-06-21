@@ -26,12 +26,12 @@ class HomePresenter: ObservableObject {
     self.useCase = useCase
     
     
-    self.posts = [
-      PostModel(id: UUID().uuidString, sender: "udin", email: "a", text: "mk3 supra is cool", date: "11 april"),
-      PostModel(id: UUID().uuidString, sender: "udin", email: "a", text: "mk3 supra is cool", date: "11 april"),
-      PostModel(id: UUID().uuidString, sender: "udin", email: "a", text: "mk3 supra is cool", date: "11 april"),
-      PostModel(id: UUID().uuidString, sender: "udin", email: "a", text: "mk3 supra is cool", date: "11 april")
-    ]
+//    self.posts = [
+//      PostModel(id: UUID().uuidString, sender: "udin", email: "a", text: "mk3 supra is cool", date: "11 april"),
+//      PostModel(id: UUID().uuidString, sender: "udin", email: "a", text: "mk3 supra is cool", date: "11 april"),
+//      PostModel(id: UUID().uuidString, sender: "udin", email: "a", text: "mk3 supra is cool", date: "11 april"),
+//      PostModel(id: UUID().uuidString, sender: "udin", email: "a", text: "mk3 supra is cool", date: "11 april")
+//    ]
   }
   
   func makeUploadView() -> some View {

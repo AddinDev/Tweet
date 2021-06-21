@@ -1,16 +1,17 @@
 //
-//  SearchView.swift
+//  ProfileView.swift
 //  Tweet
 //
-//  Created by addin on 17/06/21.
+//  Created by addin on 21/06/21.
 //
 
 import SwiftUI
 
-struct SearchView: View {
+struct ProfileView: View {
   
-  @ObservedObject var presenter: SearchPresenter
-    
+  @EnvironmentObject var auth: Authentication
+  @ObservedObject var presenter: ProfilePresenter
+  
   var body: some View {
     Group {
       if presenter.isLoading {
@@ -18,19 +19,20 @@ struct SearchView: View {
       } else if presenter.isError {
         errorIndicator
       } else {
-          content
+        content
       }
     }
     .animation(.linear)
+    .navigationBarItems(trailing: followButton)
     .onAppear {
-//      if presenter.posts.count == 0 {
-        presenter.getAllPosts()
-//      }
+      print(presenter.user)
+      presenter.getPosts()
     }
   }
+  
 }
 
-extension SearchView {
+extension ProfileView {
   
   var loadingIndicator: some View {
     VStack {
@@ -47,17 +49,25 @@ extension SearchView {
   }
   
   var content: some View {
+    list
+  }
+  
+  var list: some View {
     ScrollView {
       VStack {
         ForEach(presenter.posts) { post in
-          presenter.linkToDetail(post: post) {
-            PostItemView(post: post, last: post == presenter.posts.last ? true : false)
-          }
+          PostItemView(post: post, last: post == presenter.posts.last ? true : false)
         }
       }
     }
   }
   
+  var followButton: some View {
+    Button(action: {
+      presenter.follow(auth.user)
+    }) {
+      Text("Follow")
+    }
+  }
+  
 }
-
-

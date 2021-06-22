@@ -13,15 +13,17 @@ protocol RepositoryProtocol {
   func signIn(email: String, password: String) -> AnyPublisher<Bool, Error>
   func signOut() -> AnyPublisher<Bool, Error>
   
-  func getAllPosts() -> AnyPublisher<[PostModel], Error>
   func uploadPost(user: UserModel, text: String) -> AnyPublisher<Bool, Error>
-  
+  func getAllPosts() -> AnyPublisher<[PostModel], Error>
   func getUserPosts(of email: String) -> AnyPublisher<[PostModel], Error>
+  func getFollowedPosts() -> AnyPublisher<[PostModel], Error>
   
   func follow(this currentUser: UserModel, for user: UserModel) -> AnyPublisher<Bool, Error>
   func checkFollowStatus(this currentUser: UserModel, for user: UserModel) -> AnyPublisher<Bool, Error>
   
   func searchUser(_ username: String) -> AnyPublisher<[UserModel], Error>
+  
+  func checkFollows() -> AnyPublisher<[String: [UserModel]], Error>
 }
 
 final class Repository {
@@ -55,7 +57,7 @@ extension Repository: RepositoryProtocol {
   
   func getAllPosts() -> AnyPublisher<[PostModel], Error> {
     self.remote.getAllPosts()
-      .map { PostMapper.postsResponseToModel(for: $0) }
+      .map { PostMapper.responseToModel(for: $0) }
       .eraseToAnyPublisher()
   }
   
@@ -69,7 +71,7 @@ extension Repository: RepositoryProtocol {
   
   func getUserPosts(of email: String) -> AnyPublisher<[PostModel], Error> {
     self.remote.getUserPosts(of: email)
-      .map { PostMapper.postsResponseToModel(for: $0) }
+      .map { PostMapper.responseToModel(for: $0) }
       .eraseToAnyPublisher()
   }
   
@@ -81,6 +83,16 @@ extension Repository: RepositoryProtocol {
     self.remote.searchUser(username)
       .map { UserMapper.responseToModel($0) }
       .eraseToAnyPublisher()
+  }
+  
+  func getFollowedPosts() -> AnyPublisher<[PostModel], Error> {
+    self.remote.getFollowedPosts()
+      .map { PostMapper.responseToModel(for: $0) }
+      .eraseToAnyPublisher()
+  }
+  
+  func checkFollows() -> AnyPublisher<[String: [UserModel]], Error> {
+    self.remote.checkFollows()
   }
   
 }

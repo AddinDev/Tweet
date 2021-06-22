@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 protocol HomeUseCaseProtocol {
-
+  func getFollowedPosts() -> AnyPublisher<[PostModel], Error>
 }
 
 class HomeUseCase {
@@ -23,6 +23,8 @@ class HomeUseCase {
 
 extension HomeUseCase: HomeUseCaseProtocol {
   
-
+  func getFollowedPosts() -> AnyPublisher<[PostModel], Error> {
+    self.repository.getFollowedPosts()
+  }
   
 }

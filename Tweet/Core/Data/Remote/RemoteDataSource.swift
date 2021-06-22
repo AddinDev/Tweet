@@ -14,15 +14,17 @@ protocol RemoteDataSourceProtocol {
   func signIn(email: String, password: String) -> AnyPublisher<Bool, Error>
   func signOut() -> AnyPublisher<Bool, Error>
   
-  func getAllPosts() -> AnyPublisher<[PostResponse], Error>
   func uploadPost(user: UserModel, text: String) -> AnyPublisher<Bool, Error>
-  
+  func getAllPosts() -> AnyPublisher<[PostResponse], Error>
   func getUserPosts(of email: String) -> AnyPublisher<[PostResponse], Error>
+  func getFollowedPosts() -> AnyPublisher<[PostResponse], Error>
   
   func follow(this currentUser: UserModel, for user: UserModel) -> AnyPublisher<Bool, Error>
   func checkFollowStatus(this currentUser: UserModel, for user: UserModel) -> AnyPublisher<Bool, Error>
   
   func searchUser(_ username: String) -> AnyPublisher<[UserResponse], Error>
+
+  func checkFollows() -> AnyPublisher<[String: [UserModel]], Error> // idk how to map this, so i did this as model
 }
 
 final class RemoteDataSource {
@@ -174,6 +176,121 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
     .eraseToAnyPublisher()
   }
   
+  func getFollowedPosts() -> AnyPublisher<[PostResponse], Error> {
+    return Future<[PostResponse], Error> { completion in
+      if let userEmail = self.auth.currentUser?.email {
+        self.db.collection(self.users)
+          .document(userEmail)
+          .collection(self.following)
+          .getDocuments { snapshots, error in
+            if let error = error {
+              completion(.failure(error))
+              print("error: \(error)")
+            } else {
+              if let snapshots = snapshots?.documents {
+                var posts: [PostResponse] = []
+                for snapshot in snapshots {
+                  let data = snapshot.data()
+                  if let email = data["email"] as? String {
+                    self.db.collection(self.posts)
+                      .whereField("email", isEqualTo: email)
+                      .getDocuments { snapshots, error in
+                        if let error = error {
+                          completion(.failure(error))
+                          print("error: \(error)")
+                        } else {
+                          if let snapshots = snapshots?.documents {
+                            for snapshot in snapshots {
+                              let data = snapshot.data()
+                              if let text = data["text"] as? String,
+                                 let sender = data["sender"] as? String,
+                                 let email = data["email"] as? String,
+                                 let date = data["date"] as? String {
+                                let post = PostResponse(sender: sender, email: email, text: text, date: date)
+                                posts.append(post)
+                              }
+                            }
+                          }
+                        }
+                      }
+                  }
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                  completion(.success(posts))
+                }
+              }
+            }
+          }
+      }
+    }
+    .eraseToAnyPublisher()
+  }
+  
+  func checkFollows() -> AnyPublisher<[String: [UserModel]], Error> {
+    return Future<[String: [UserModel]], Error> { completion in
+      if let userEmail = self.auth.currentUser?.email {
+        var followers: [UserModel] = []
+        var following: [UserModel] = []
+        
+        // followers
+        self.db.collection(self.users)
+          .document(userEmail)
+          .collection(self.followers)
+          .getDocuments { snapshots, error in
+            if let error = error {
+              completion(.failure(error))
+              print("error: \(error)")
+            } else {
+              if let snapshots = snapshots?.documents {
+                for snapshot in snapshots {
+                  let data = snapshot.data()
+                  if let email = data["email"] as? String,
+                     let username = data["username"] as? String,
+                     let photoUrl = data["photoUrl"] as? String? {
+                    let user = UserModel(id: UUID().uuidString, email: email, username: username, photoUrl: photoUrl)
+                    followers.append(user)
+                  }
+                }
+              }
+            }
+          }
+        // followers
+        
+        // following
+        self.db.collection(self.users)
+          .document(userEmail)
+          .collection(self.following)
+          .getDocuments { snapshots, error in
+            if let error = error {
+              completion(.failure(error))
+              print("error: \(error)")
+            } else {
+              if let snapshots = snapshots?.documents {
+                for snapshot in snapshots {
+                  let data = snapshot.data()
+                  if let email = data["email"] as? String,
+                     let username = data["username"] as? String,
+                     let photoUrl = data["photoUrl"] as? String? {
+                    let user = UserModel(email: email, username: username, photoUrl: photoUrl)
+                    following.append(user)
+                  }
+                }
+              }
+            }
+          }
+        // following
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+          completion(.success([
+            self.followers: followers,
+            self.following: following
+          ]))
+        }
+        
+      }
+    }
+    .eraseToAnyPublisher()
+  }
+  
   func searchUser(_ username: String) -> AnyPublisher<[UserResponse], Error> {
     return Future<[UserResponse], Error> { completion in
       self.db.collection(self.users)
@@ -187,7 +304,9 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
               var users: [UserResponse] = []
               for snapshot in snapshots {
                 let data = snapshot.data()
-                if let email = data["email"] as? String, let username = data["username"] as? String, let photoUrl = data["photoUrl"] as? String? {
+                if let email = data["email"] as? String,
+                   let username = data["username"] as? String,
+                   let photoUrl = data["photoUrl"] as? String? {
                   let user = UserResponse(email: email, username: username, photoUrl: photoUrl)
                   users.append(user)
                 }

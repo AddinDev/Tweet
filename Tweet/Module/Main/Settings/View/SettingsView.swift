@@ -13,17 +13,18 @@ struct SettingsView: View {
   
   @ObservedObject var presenter: SettingsPresenter
   
+  @State private var showFollows = false
+  
   var body: some View {
-    Group {
-      if presenter.isLoading {
-        loadingIndicator
-      } else if presenter.isError {
-        errorIndicator
-      } else {
-        content
+    content
+      .onAppear {
+        if presenter.follows == [:] {
+          presenter.checkFollows()
+        }
       }
-    }
-    .animation(.linear)
+      .sheet(isPresented: $showFollows) {
+        FollowListView(users: presenter.follows)
+      }
   }
   
 }
@@ -31,11 +32,9 @@ struct SettingsView: View {
 extension SettingsView {
   
   var loadingIndicator: some View {
-    VStack {
-      Text("Loading...")
-      ProgressView()
-        .progressViewStyle(CircularProgressViewStyle())
-    }
+    ProgressView()
+      .progressViewStyle(CircularProgressViewStyle())
+      .padding()
   }
   
   var errorIndicator: some View {
@@ -48,9 +47,32 @@ extension SettingsView {
     VStack {
       Text(auth.email)
       Text(auth.username)
+      follows
       logoutButton
     }
     .padding()
+  }
+  
+  var follows: some View {
+    Group {
+      if presenter.isLoading {
+        loadingIndicator
+      } else if presenter.isError {
+        errorIndicator
+      } else {
+        HStack {
+          Text("Following \(presenter.follows["Following"]?.count ?? 0)")
+          Spacer()
+          Text("Followers \(presenter.follows["Followers"]?.count ?? 0)")
+        }
+        .foregroundColor(.primary)
+        .padding()
+        .onTapGesture {
+          showFollows = true
+        }
+      }
+    }
+    .animation(.linear)
   }
   
   var logoutButton: some View {

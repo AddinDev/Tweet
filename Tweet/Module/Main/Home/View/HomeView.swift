@@ -12,34 +12,30 @@ struct HomeView: View {
   @ObservedObject var presenter: HomePresenter
   
   @State private var showUploadview = false
-    
+  
   var body: some View {
     Group {
-      if presenter.isLoading {
-        loadingIndicator
-      } else if presenter.isError {
-        errorIndicator
-      } else {
-        ZStack() {
+      ZStack() {
+        if presenter.isLoading {
+          loadingIndicator
+        } else if presenter.posts.count == 0 {
+          emptyIndicator
+        } else if presenter.isError {
+          errorIndicator
+        } else {
           content
-          HStack {
-            Spacer()
-            VStack {
-              Spacer()
-              uploadButton
-            }
-          }
         }
+        uploadButton
       }
     }
     .animation(.linear)
-//    .onAppear {
-//      if presenter.posts.count == 0 {
-//        presenter.getAllPosts()
-//      }
-//    }
+    .onAppear {
+      if presenter.posts.count == 0 {
+        presenter.getPosts()
+      }
+    }
     .fullScreenCover(isPresented: $showUploadview, onDismiss: {
-//      presenter.getAllPosts()
+      //      presenter.getAllPosts()
     }) {
       presenter.makeUploadView()
     }
@@ -62,6 +58,10 @@ extension HomeView {
       .padding()
   }
   
+  var emptyIndicator: some View {
+    Text("Empty")
+  }
+  
   var content: some View {
     ScrollView {
       VStack {
@@ -73,17 +73,23 @@ extension HomeView {
   }
   
   var uploadButton: some View {
-    Button(action: {
-      showUploadview = true
-    }) {
-      Image(systemName: "square.and.arrow.up")
-        .resizable()
-        .scaledToFit()
-        .foregroundColor(.white)
-        .frame(width: 25)
-        .padding()
-        .background(Circle().foregroundColor(.blue))
-        .padding()
+    HStack {
+      Spacer()
+      VStack {
+        Spacer()
+        Button(action: {
+          showUploadview = true
+        }) {
+          Image(systemName: "square.and.arrow.up")
+            .resizable()
+            .scaledToFit()
+            .foregroundColor(.white)
+            .frame(width: 25)
+            .padding()
+            .background(Circle().foregroundColor(.blue))
+            .padding()
+        }
+      }
     }
   }
   

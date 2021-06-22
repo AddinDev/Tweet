@@ -10,6 +10,7 @@ import Combine
 
 protocol SearchUseCaseProtocol {
   func getAllPosts() -> AnyPublisher<[PostModel], Error>
+  func searchUser(_ username: String) -> AnyPublisher<[UserModel], Error>
 }
 
 class SearchUseCase {
@@ -25,6 +26,10 @@ extension SearchUseCase: SearchUseCaseProtocol {
   
   func getAllPosts() -> AnyPublisher<[PostModel], Error> {
     self.repository.getAllPosts()
+  }
+  
+  func searchUser(_ username: String) -> AnyPublisher<[UserModel], Error> {
+    self.repository.searchUser(username)
   }
   
 }

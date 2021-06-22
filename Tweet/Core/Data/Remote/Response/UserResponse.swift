@@ -7,9 +7,8 @@
 
 import Foundation
 
-struct UserResponse: Identifiable {
+struct UserResponse {
   
-  var id: String = UUID().uuidString
   var email: String = ""
   var username: String = ""
   var photoUrl: String?

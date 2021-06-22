@@ -10,7 +10,7 @@ import SwiftUI
 struct SearchView: View {
   
   @ObservedObject var presenter: SearchPresenter
-    
+  
   var body: some View {
     Group {
       if presenter.isLoading {
@@ -18,14 +18,14 @@ struct SearchView: View {
       } else if presenter.isError {
         errorIndicator
       } else {
-          content
+        content
       }
     }
     .animation(.linear)
     .onAppear {
-//      if presenter.posts.count == 0 {
-        presenter.getAllPosts()
-//      }
+      //      if presenter.posts.count == 0 {
+      presenter.getAllPosts()
+      //      }
     }
   }
 }
@@ -47,6 +47,36 @@ extension SearchView {
   }
   
   var content: some View {
+    ScrollView {
+      LazyVStack {
+        searchBar
+        users
+      }
+    }
+  }
+  
+  var searchBar: some View {
+    TextField("Search User", text: $presenter.searchText)
+      .autocapitalization(.none)
+      .disableAutocorrection(true)
+      .padding()
+  }
+  
+  var users: some View {
+    ScrollView {
+      VStack {
+        ForEach(presenter.users) { user in
+          presenter.linkToProfile(user: user) {
+            HStack {
+              Text(user.username)
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  var posts: some View {
     ScrollView {
       VStack {
         ForEach(presenter.posts) { post in

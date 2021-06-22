@@ -13,4 +13,10 @@ class SearchRouter {
     return PostDetailView(post: post)
   }
   
+  func makeProfileView(_ user: UserModel) -> some View {
+    let useCase = Injection.init().provideProfile()
+    let presenter = ProfilePresenter(user: user, useCase: useCase)
+    return ProfileView(presenter: presenter)
+  }
+  
 }

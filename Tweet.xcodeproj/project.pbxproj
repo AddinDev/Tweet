@@ -16,6 +16,7 @@
 		047FE9FF267C97B900689E5D /* SettingsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FE9FE267C97B900689E5D /* SettingsUseCase.swift */; };
 		047FEA02267C97EF00689E5D /* SettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEA01267C97EF00689E5D /* SettingsPresenter.swift */; };
 		04917B67268180150047A6B2 /* UserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04917B66268180150047A6B2 /* UserResponse.swift */; };
+		04917B6926818B480047A6B2 /* UserMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04917B6826818B480047A6B2 /* UserMapper.swift */; };
 		04AC23042679C92C004DD51F /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AC23032679C92C004DD51F /* Repository.swift */; };
 		04AC23072679C955004DD51F /* LocaleDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AC23062679C955004DD51F /* LocaleDataSource.swift */; };
 		04AC230A2679C96B004DD51F /* RemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AC23092679C96B004DD51F /* RemoteDataSource.swift */; };
@@ -87,6 +88,7 @@
 		047FE9FE267C97B900689E5D /* SettingsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUseCase.swift; sourceTree = "<group>"; };
 		047FEA01267C97EF00689E5D /* SettingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPresenter.swift; sourceTree = "<group>"; };
 		04917B66268180150047A6B2 /* UserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponse.swift; sourceTree = "<group>"; };
+		04917B6826818B480047A6B2 /* UserMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMapper.swift; sourceTree = "<group>"; };
 		04AC23032679C92C004DD51F /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		04AC23062679C955004DD51F /* LocaleDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleDataSource.swift; sourceTree = "<group>"; };
 		04AC23092679C96B004DD51F /* RemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDataSource.swift; sourceTree = "<group>"; };
@@ -360,6 +362,7 @@
 			isa = PBXGroup;
 			children = (
 				04B74DEC267A426F00454E89 /* PostMapper.swift */,
+				04917B6826818B480047A6B2 /* UserMapper.swift */,
 			);
 			path = Mapper;
 			sourceTree = "<group>";
@@ -960,6 +963,7 @@
 				045D40D6267B99A000B179AB /* SearchPresenter.swift in Sources */,
 				04AC230A2679C96B004DD51F /* RemoteDataSource.swift in Sources */,
 				047FE9FD267C87C200689E5D /* UserAuthentication.swift in Sources */,
+				04917B6926818B480047A6B2 /* UserMapper.swift in Sources */,
 				045D40D4267B998F00B179AB /* SearchView.swift in Sources */,
 				04C65F8E268090E500603B32 /* ProfileView.swift in Sources */,
 				04AC231B2679D530004DD51F /* Injection.swift in Sources */,

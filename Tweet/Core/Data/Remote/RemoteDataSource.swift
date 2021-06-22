@@ -21,7 +21,8 @@ protocol RemoteDataSourceProtocol {
   
   func follow(this currentUser: UserModel, for user: UserModel) -> AnyPublisher<Bool, Error>
   func checkFollowStatus(this currentUser: UserModel, for user: UserModel) -> AnyPublisher<Bool, Error>
-//  func searchUser(_ username: String) -> AnyPublisher<[UserResponse], Error>
+  
+  func searchUser(_ username: String) -> AnyPublisher<[UserResponse], Error>
 }
 
 final class RemoteDataSource {
@@ -173,12 +174,31 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
     .eraseToAnyPublisher()
   }
   
-//  func searchUser(_ username: String) -> AnyPublisher<[UserResponse], Error> {
-//    return Future<[UserResponse], Error> { completion in
-//      self.db
-//    }
-//    .eraseToAnyPublisher()
-//  }
+  func searchUser(_ username: String) -> AnyPublisher<[UserResponse], Error> {
+    return Future<[UserResponse], Error> { completion in
+      self.db.collection(self.users)
+        .whereField("username", isEqualTo: username)
+        .getDocuments { snapshots, error in
+          if let error = error {
+            completion(.failure(error))
+            print("error: \(error)")
+          } else {
+            if let snapshots = snapshots?.documents {
+              var users: [UserResponse] = []
+              for snapshot in snapshots {
+                let data = snapshot.data()
+                if let email = data["email"] as? String, let username = data["username"] as? String, let photoUrl = data["photoUrl"] as? String? {
+                  let user = UserResponse(email: email, username: username, photoUrl: photoUrl)
+                  users.append(user)
+                }
+              }
+              completion(.success(users))
+            }
+          }
+        }
+    }
+    .eraseToAnyPublisher()
+  }
   
   func follow(this currentUser: UserModel, for user: UserModel) -> AnyPublisher<Bool, Error> {
     return Future<Bool, Error> { completion in

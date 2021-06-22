@@ -19,6 +19,7 @@ protocol RepositoryProtocol {
   func getUserPosts(of email: String) -> AnyPublisher<[PostModel], Error>
   
   func follow(this currentUser: UserModel, for user: UserModel) -> AnyPublisher<Bool, Error>
+  func checkFollowStatus(this currentUser: UserModel, for user: UserModel) -> AnyPublisher<Bool, Error>
 }
 
 final class Repository {
@@ -68,6 +69,10 @@ extension Repository: RepositoryProtocol {
     self.remote.getUserPosts(of: email)
       .map { PostMapper.postsResponseToModel(for: $0) }
       .eraseToAnyPublisher()
+  }
+  
+  func checkFollowStatus(this currentUser: UserModel, for user: UserModel) -> AnyPublisher<Bool, Error> {
+    self.remote.checkFollowStatus(this: currentUser, for: user)
   }
   
 }

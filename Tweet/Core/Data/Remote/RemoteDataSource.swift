@@ -20,7 +20,8 @@ protocol RemoteDataSourceProtocol {
   func getUserPosts(of email: String) -> AnyPublisher<[PostResponse], Error>
   
   func follow(this currentUser: UserModel, for user: UserModel) -> AnyPublisher<Bool, Error>
-  
+  func checkFollowStatus(this currentUser: UserModel, for user: UserModel) -> AnyPublisher<Bool, Error>
+//  func searchUser(_ username: String) -> AnyPublisher<[UserResponse], Error>
 }
 
 final class RemoteDataSource {
@@ -172,10 +173,17 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
     .eraseToAnyPublisher()
   }
   
+//  func searchUser(_ username: String) -> AnyPublisher<[UserResponse], Error> {
+//    return Future<[UserResponse], Error> { completion in
+//      self.db
+//    }
+//    .eraseToAnyPublisher()
+//  }
+  
   func follow(this currentUser: UserModel, for user: UserModel) -> AnyPublisher<Bool, Error> {
     return Future<Bool, Error> { completion in
       self.db.collection(self.users)
-        .document(currentUser.username)
+        .document(currentUser.email)
         .collection(self.following)
         .document(user.email)
         .setData([
@@ -187,7 +195,7 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
             print("error: \(error)")
           } else {
             self.db.collection(self.users)
-              .document(user.username)
+              .document(user.email)
               .collection(self.followers)
               .document(currentUser.email)
               .setData([
@@ -201,6 +209,35 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
                   completion(.success(true))
                 }
               }
+          }
+        }
+    }
+    .eraseToAnyPublisher()
+  }
+  
+  func checkFollowStatus(this currentUser: UserModel, for user: UserModel) -> AnyPublisher<Bool, Error> {
+    return Future<Bool, Error> { completion in
+      self.db.collection(self.users)
+        .document(currentUser.email)
+        .collection(self.following)
+        .whereField("email", isEqualTo: user.email)
+        .getDocuments { snapshot, error in
+          if let error = error {
+            completion(.failure(error))
+            print("error: \(error)")
+          } else {
+            if let snapshots = snapshot?.documents {
+              if snapshots.count == 0 {
+                completion(.success(false))
+                print("snap: 0")
+              } else {
+                completion(.success(true))
+                print("snap: ada")
+              }
+            } else {
+              completion(.success(false))
+              print("snap: nil")
+            }
           }
         }
     }

@@ -1,13 +1,13 @@
 //
-//  UserModel.swift
+//  UserResponse.swift
 //  Tweet
 //
-//  Created by addin on 21/06/21.
+//  Created by addin on 22/06/21.
 //
 
 import Foundation
 
-struct UserModel: Identifiable, Equatable {
+struct UserResponse: Identifiable {
   
   var id: String = UUID().uuidString
   var email: String = ""

@@ -15,6 +15,7 @@
 		047FE9FD267C87C200689E5D /* UserAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FE9FC267C87C200689E5D /* UserAuthentication.swift */; };
 		047FE9FF267C97B900689E5D /* SettingsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FE9FE267C97B900689E5D /* SettingsUseCase.swift */; };
 		047FEA02267C97EF00689E5D /* SettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEA01267C97EF00689E5D /* SettingsPresenter.swift */; };
+		04917B67268180150047A6B2 /* UserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04917B66268180150047A6B2 /* UserResponse.swift */; };
 		04AC23042679C92C004DD51F /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AC23032679C92C004DD51F /* Repository.swift */; };
 		04AC23072679C955004DD51F /* LocaleDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AC23062679C955004DD51F /* LocaleDataSource.swift */; };
 		04AC230A2679C96B004DD51F /* RemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AC23092679C96B004DD51F /* RemoteDataSource.swift */; };
@@ -85,6 +86,7 @@
 		047FE9FC267C87C200689E5D /* UserAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthentication.swift; sourceTree = "<group>"; };
 		047FE9FE267C97B900689E5D /* SettingsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUseCase.swift; sourceTree = "<group>"; };
 		047FEA01267C97EF00689E5D /* SettingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPresenter.swift; sourceTree = "<group>"; };
+		04917B66268180150047A6B2 /* UserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponse.swift; sourceTree = "<group>"; };
 		04AC23032679C92C004DD51F /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		04AC23062679C955004DD51F /* LocaleDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleDataSource.swift; sourceTree = "<group>"; };
 		04AC23092679C96B004DD51F /* RemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDataSource.swift; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 			isa = PBXGroup;
 			children = (
 				04AC230E2679CAD9004DD51F /* PostResponse.swift */,
+				04917B66268180150047A6B2 /* UserResponse.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -963,6 +966,7 @@
 				04B74DEA267A37CF00454E89 /* PostModel.swift in Sources */,
 				04C65F972680996400603B32 /* SearchRouter.swift in Sources */,
 				04C5BFAA267308F7004E02DE /* AppDelegate.swift in Sources */,
+				04917B67268180150047A6B2 /* UserResponse.swift in Sources */,
 				04B051BF267B483900EBAE2A /* HomeUseCase.swift in Sources */,
 				04C65F952680982100603B32 /* PostDetailRouter.swift in Sources */,
 				047FE9FF267C97B900689E5D /* SettingsUseCase.swift in Sources */,

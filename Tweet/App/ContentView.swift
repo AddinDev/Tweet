@@ -15,11 +15,12 @@ struct ContentView: View {
   @EnvironmentObject var homePresenter: HomePresenter
   @EnvironmentObject var searchPresenter: SearchPresenter
   
-  @State private var selected = 1
+  @State private var selected = 0
   
   var body: some View {
     content
   }
+  
 }
 
 extension ContentView {
@@ -29,6 +30,8 @@ extension ContentView {
       if auth.hasSignedIn {
         NavigationView {
         main
+          .navigationBarTitle("", displayMode: .inline)
+          .navigationBarHidden(true)
         }
       } else {
         signer

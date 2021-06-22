@@ -11,6 +11,7 @@ import Combine
 protocol ProfileUseCaseProtocol {
   func getUserPosts(of email: String) -> AnyPublisher<[PostModel], Error>
   func follow(this currentUser: UserModel, for user: UserModel) -> AnyPublisher<Bool, Error>
+  func checkFollowStatus(this currentUser: UserModel, for user: UserModel) -> AnyPublisher<Bool, Error>
 }
 
 class ProfileUseCase {
@@ -30,6 +31,10 @@ extension ProfileUseCase: ProfileUseCaseProtocol {
   
   func follow(this currentUser: UserModel, for user: UserModel) -> AnyPublisher<Bool, Error> {
     self.repository.follow(this: currentUser, for: user)
+  }
+  
+  func checkFollowStatus(this currentUser: UserModel, for user: UserModel) -> AnyPublisher<Bool, Error> {
+    self.repository.checkFollowStatus(this: currentUser, for: user)
   }
   
 }

@@ -23,9 +23,10 @@ struct ProfileView: View {
       }
     }
     .animation(.linear)
+    .navigationBarTitle(presenter.user.username)
     .navigationBarItems(trailing: followButton)
     .onAppear {
-      print(presenter.user)
+      presenter.checkFollowStatus(auth.user)
       presenter.getPosts()
     }
   }
@@ -63,10 +64,23 @@ extension ProfileView {
   }
   
   var followButton: some View {
-    Button(action: {
-      presenter.follow(auth.user)
-    }) {
-      Text("Follow")
+    Group {
+      if auth.user.email == presenter.user.email {
+        
+      } else {
+        if presenter.followLoading {
+          ProgressView()
+            .progressViewStyle(CircularProgressViewStyle())
+        } else if presenter.isFollowing {
+          Text("Followed")
+        } else {
+          Button(action: {
+            presenter.follow(auth.user)
+          }) {
+            Text("Follow")
+          }
+        }
+      }
     }
   }
   

@@ -13,7 +13,8 @@ class SettingsPresenter: ObservableObject {
   private var router = SettingsRouter()
   private var useCase: SettingsUseCase
   
-  @Published var follows: [String: [UserModel]] = [:]
+  @Published var followers: [UserModel] = []
+  @Published var following: [UserModel] = []
   @Published var isLoading = false
   @Published var isError = false
   @Published var errorMessage = ""
@@ -45,11 +46,11 @@ class SettingsPresenter: ObservableObject {
       .store(in: &cancellables)
   }
   
-  func checkFollows() {
+  func checkFollowers() {
     self.isLoading = true
     self.errorMessage = ""
     self.isError = false
-    useCase.checkFollows()
+    useCase.checkFollowers()
       .sink { completion in
         switch completion {
         case .failure(let error):
@@ -60,13 +61,33 @@ class SettingsPresenter: ObservableObject {
           self.isLoading = false
         }
       } receiveValue: { follows in
-        self.follows = follows
+        self.followers = follows
+      }
+      .store(in: &cancellables)
+  }
+  
+  func checkFollowing() {
+    self.isLoading = true
+    self.errorMessage = ""
+    self.isError = false
+    useCase.checkFollowing()
+      .sink { completion in
+        switch completion {
+        case .failure(let error):
+          self.errorMessage = error.localizedDescription
+          self.isError = true
+          self.isLoading = false
+        case .finished:
+          self.isLoading = false
+        }
+      } receiveValue: { follows in
+        self.following = follows
       }
       .store(in: &cancellables)
   }
   
   func makeListView() -> some View {
-    self.router.makeListView(follows)
+    self.router.makeListView(followers, following)
   }
   
   func linkToProfile<Content: View>(user: UserModel, @ViewBuilder content: () -> Content) -> some View {

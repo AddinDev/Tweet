@@ -45,9 +45,32 @@ class HomePresenter: ObservableObject {
           self.isLoading = false
         }
       } receiveValue: { posts in
-        self.posts = posts
+        self.posts = self.sortPosts(posts)
       }
       .store(in: &cancellables)
+  }
+  
+  func sortPosts(_ models: [PostModel]) -> [PostModel] {
+    let count = 0..<models.count
+    let dateFormatter = DateFormatter()
+    
+    dateFormatter.dateFormat = "dd/MM/yyyy "
+    
+    var convertedArray: [(String, String, Date, UserModel)] = []
+    
+    for i in count {
+      if let date =  dateFormatter.date(from: models[i].date) {
+        convertedArray.append((models[i].id, models[i].text, date, models[i].user))
+      }
+    }
+    
+    let ready = convertedArray.sorted(by:  { $0.2.compare($1.2) == .orderedDescending })
+    
+    let final = ready.map { item in
+      return PostModel(id: item.0, text: item.1, date: dateFormatter.string(from: item.2), user: item.3)
+    }
+
+    return final
   }
   
 }

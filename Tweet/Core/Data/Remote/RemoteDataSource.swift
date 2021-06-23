@@ -24,7 +24,9 @@ protocol RemoteDataSourceProtocol {
   
   func searchUser(_ username: String) -> AnyPublisher<[UserResponse], Error>
 
-  func checkFollows() -> AnyPublisher<[String: [UserModel]], Error> // idk how to map this, so i did this as model
+  // idk how to map these, so i did these as model
+  func checkFollowers() -> AnyPublisher<[UserModel], Error>
+  func checkFollowing() -> AnyPublisher<[UserModel], Error>
 }
 
 final class RemoteDataSource {
@@ -226,13 +228,9 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
     .eraseToAnyPublisher()
   }
   
-  func checkFollows() -> AnyPublisher<[String: [UserModel]], Error> {
-    return Future<[String: [UserModel]], Error> { completion in
+  func checkFollowers() -> AnyPublisher<[UserModel], Error> {
+    return Future<[UserModel], Error> { completion in
       if let userEmail = self.auth.currentUser?.email {
-        var followers: [UserModel] = []
-        var following: [UserModel] = []
-        
-        // followers
         self.db.collection(self.users)
           .document(userEmail)
           .collection(self.followers)
@@ -242,21 +240,28 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
               print("error: \(error)")
             } else {
               if let snapshots = snapshots?.documents {
+                var follows: [UserModel] = []
                 for snapshot in snapshots {
                   let data = snapshot.data()
                   if let email = data["email"] as? String,
                      let username = data["username"] as? String,
                      let photoUrl = data["photoUrl"] as? String? {
                     let user = UserModel(id: UUID().uuidString, email: email, username: username, photoUrl: photoUrl)
-                    followers.append(user)
+                    follows.append(user)
                   }
                 }
+                completion(.success(follows))
               }
             }
           }
-        // followers
-        
-        // following
+      }
+    }
+    .eraseToAnyPublisher()
+  }
+  
+  func checkFollowing() -> AnyPublisher<[UserModel], Error> {
+    return Future<[UserModel], Error> { completion in
+      if let userEmail = self.auth.currentUser?.email {
         self.db.collection(self.users)
           .document(userEmail)
           .collection(self.following)
@@ -266,26 +271,20 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
               print("error: \(error)")
             } else {
               if let snapshots = snapshots?.documents {
+                var follows: [UserModel] = []
                 for snapshot in snapshots {
                   let data = snapshot.data()
                   if let email = data["email"] as? String,
                      let username = data["username"] as? String,
                      let photoUrl = data["photoUrl"] as? String? {
                     let user = UserModel(email: email, username: username, photoUrl: photoUrl)
-                    following.append(user)
+                    follows.append(user)
                   }
                 }
+                completion(.success(follows))
               }
             }
           }
-        // following
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-          completion(.success([
-            self.followers: followers,
-            self.following: following
-          ]))
-        }
-        
       }
     }
     .eraseToAnyPublisher()

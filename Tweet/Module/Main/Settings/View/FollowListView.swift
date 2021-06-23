@@ -12,13 +12,11 @@ struct FollowListView: View {
   @State var selected = 0
   
   let mode = ["Followers", "Following"]
-  var users: [String: [UserModel]]
-  
+  var followers: [UserModel]
+  var following: [UserModel]
+
   var body: some View {
     content
-      .onAppear {
-        print(users)
-      }
   }
   
 }
@@ -51,9 +49,9 @@ extension FollowListView {
   
   var tab: some View {
     TabView(selection: $selected) {
-      FollowList(users: users["Followers"]!)
+      FollowList(users: followers)
         .tag(0)
-      FollowList(users: users["Following"]!)
+      FollowList(users: following)
         .tag(1)
     }
     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))

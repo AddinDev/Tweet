@@ -10,7 +10,8 @@ import Combine
 
 protocol SettingsUseCaseProtocol {
   func signOut() -> AnyPublisher<Bool, Error>
-  func checkFollows() -> AnyPublisher<[String: [UserModel]], Error>
+  func checkFollowers() -> AnyPublisher<[UserModel], Error>
+  func checkFollowing() -> AnyPublisher<[UserModel], Error>
 }
 
 class SettingsUseCase {
@@ -28,8 +29,12 @@ extension SettingsUseCase: SettingsUseCaseProtocol {
     self.repository.signOut()
   }
   
-  func checkFollows() -> AnyPublisher<[String: [UserModel]], Error> {
-    self.repository.checkFollows()
+  func checkFollowers() -> AnyPublisher<[UserModel], Error> {
+    self.repository.checkFollowers()
+  }
+  
+  func checkFollowing() -> AnyPublisher<[UserModel], Error> {
+    self.repository.checkFollowing()
   }
   
 }

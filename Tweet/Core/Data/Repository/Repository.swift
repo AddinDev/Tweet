@@ -23,7 +23,9 @@ protocol RepositoryProtocol {
   
   func searchUser(_ username: String) -> AnyPublisher<[UserModel], Error>
   
-  func checkFollows() -> AnyPublisher<[String: [UserModel]], Error>
+  func checkFollowers() -> AnyPublisher<[UserModel], Error>
+  func checkFollowing() -> AnyPublisher<[UserModel], Error>
+  
 }
 
 final class Repository {
@@ -91,8 +93,12 @@ extension Repository: RepositoryProtocol {
       .eraseToAnyPublisher()
   }
   
-  func checkFollows() -> AnyPublisher<[String: [UserModel]], Error> {
-    self.remote.checkFollows()
+  func checkFollowers() -> AnyPublisher<[UserModel], Error> {
+    self.remote.checkFollowers()
+  }
+  
+  func checkFollowing() -> AnyPublisher<[UserModel], Error> {
+    self.remote.checkFollowing()
   }
   
 }

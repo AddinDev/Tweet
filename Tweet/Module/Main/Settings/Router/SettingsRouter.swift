@@ -9,8 +9,8 @@ import SwiftUI
 
 class SettingsRouter {
   
-  func makeListView(_ users: [String: [UserModel]]) -> some View {
-    return FollowListView(users: users)
+  func makeListView(_ followers: [UserModel], _ following: [UserModel]) -> some View {
+    return FollowListView(followers: followers, following: following)
   }
   
   func makeProfileView(_ user: UserModel) -> some View {

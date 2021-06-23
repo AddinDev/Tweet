@@ -18,12 +18,12 @@ struct SettingsView: View {
   var body: some View {
     content
       .onAppear {
-        if presenter.follows == [:] {
-          presenter.checkFollows()
-        }
+        presenter.checkFollowing()
+        presenter.checkFollowers()
       }
       .sheet(isPresented: $showFollows) {
-        FollowListView(users: presenter.follows)
+        FollowListView(followers: presenter.followers,
+                       following: presenter.following)
       }
   }
   
@@ -54,27 +54,16 @@ extension SettingsView {
   }
   
   var follows: some View {
-    Group {
-      if presenter.isLoading {
-        loadingIndicator
-      } else if presenter.isError {
-        errorIndicator
-      } else {
-        HStack {
-          if presenter.follows["Following"] != nil && presenter.follows["Followers"] != nil {
-            Text("Following \(presenter.follows["Following"]?.count ?? 0)")
-            Spacer()
-            Text("Followers \(presenter.follows["Followers"]?.count ?? 0)")
-          }
-        }
-        .foregroundColor(.primary)
-        .padding()
-        .onTapGesture {
-          showFollows = true
-        }
-      }
+    HStack {
+      Text("Following \(presenter.following.count)")
+      Spacer()
+      Text("Followers \(presenter.followers.count)")
     }
-    .animation(.linear)
+    .foregroundColor(.primary)
+    .padding()
+    .onTapGesture {
+      showFollows = true
+    }
   }
   
   var logoutButton: some View {

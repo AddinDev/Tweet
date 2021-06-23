@@ -59,6 +59,7 @@
 		04C65F922680917500603B32 /* ProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C65F912680917500603B32 /* ProfileUseCase.swift */; };
 		04C65F952680982100603B32 /* PostDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C65F942680982100603B32 /* PostDetailRouter.swift */; };
 		04C65F972680996400603B32 /* SearchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C65F962680996400603B32 /* SearchRouter.swift */; };
+		04DA13E12682E42100C8FA40 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DA13E02682E42100C8FA40 /* Color.swift */; };
 		44F6E53754FB0A35462DCD52 /* Pods_TweetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F57841B00B3095697F84840 /* Pods_TweetTests.framework */; };
 		5E4F2CCECD7D200FE81B7B2F /* Pods_Tweet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F967266018EB9A8B29155EE1 /* Pods_Tweet.framework */; };
 		6CF3E3124D48BC2CD55E444F /* Pods_Tweet_TweetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33586FEB29FEF012CBD1AB25 /* Pods_Tweet_TweetUITests.framework */; };
@@ -140,6 +141,7 @@
 		04C65F912680917500603B32 /* ProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUseCase.swift; sourceTree = "<group>"; };
 		04C65F942680982100603B32 /* PostDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailRouter.swift; sourceTree = "<group>"; };
 		04C65F962680996400603B32 /* SearchRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRouter.swift; sourceTree = "<group>"; };
+		04DA13E02682E42100C8FA40 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		13AB6BA83F86D8930C70824C /* Pods-Tweet-TweetUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tweet-TweetUITests.release.xcconfig"; path = "Target Support Files/Pods-Tweet-TweetUITests/Pods-Tweet-TweetUITests.release.xcconfig"; sourceTree = "<group>"; };
 		33586FEB29FEF012CBD1AB25 /* Pods_Tweet_TweetUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tweet_TweetUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		69F0F1D1E116F0F66DD07BA6 /* Pods-TweetTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TweetTests.debug.xcconfig"; path = "Target Support Files/Pods-TweetTests/Pods-TweetTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 			isa = PBXGroup;
 			children = (
 				045D40CC267B94FB00B179AB /* Date.swift */,
+				04DA13E02682E42100C8FA40 /* Color.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1008,6 +1011,7 @@
 				04C65F952680982100603B32 /* PostDetailRouter.swift in Sources */,
 				047FE9FF267C97B900689E5D /* SettingsUseCase.swift in Sources */,
 				046CA35D2682192200EE9252 /* FollowListView.swift in Sources */,
+				04DA13E12682E42100C8FA40 /* Color.swift in Sources */,
 				04C65F85268080A100603B32 /* PostDetailView.swift in Sources */,
 				046CA3612682201F00EE9252 /* UserItemView.swift in Sources */,
 				04C5BFEE267309EF004E02DE /* HomeView.swift in Sources */,

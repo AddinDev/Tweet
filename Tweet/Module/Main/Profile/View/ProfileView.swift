@@ -13,16 +13,24 @@ struct ProfileView: View {
   @ObservedObject var presenter: ProfilePresenter
   
   var body: some View {
+    GeometryReader { g in
     Group {
       if presenter.isLoading {
         loadingIndicator
       } else if presenter.isError {
         errorIndicator
       } else {
-        content
+        ScrollView {
+          LazyVStack(spacing: 0) {
+            ForEach(presenter.posts) { post in
+              PostItemView(post: post, g: g)
+            }
+          }
+        }
+        }
       }
     }
-    .animation(.linear)
+    .animation(.spring())
     .navigationBarTitle(presenter.user.username)
     .navigationBarItems(trailing: followButton)
     .onAppear {
@@ -49,19 +57,20 @@ extension ProfileView {
       .padding()
   }
   
-  var content: some View {
-    list
-  }
+  //  var content: some View {
+  ////    list
+  //    Text("A")
+  //  }
   
-  var list: some View {
-    ScrollView {
-      VStack {
-        ForEach(presenter.posts) { post in
-          PostItemView(post: post, last: post == presenter.posts.last ? true : false)
-        }
-      }
-    }
-  }
+  //  var list: some View {
+  //    ScrollView {
+  //      VStack {
+  //        ForEach(presenter.posts) { post in
+  //          PostItemView(post: post)
+  //        }
+  //      }
+  //    }
+  //  }
   
   var followButton: some View {
     Group {

@@ -28,14 +28,7 @@ extension FollowListView {
   var content: some View {
     VStack {
       picker
-      TabView(selection: $selected) {
-        FollowList(users: users["Followers"]!)
-          .tag(0)
-        FollowList(users: users["Following"]!)
-          .tag(1)
-      }
-      .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-      .animation(.linear)
+      tab
       Spacer()
     }
   }
@@ -56,6 +49,16 @@ extension FollowListView {
     .padding(.top, 10)
   }
   
+  var tab: some View {
+    TabView(selection: $selected) {
+      FollowList(users: users["Followers"]!)
+        .tag(0)
+      FollowList(users: users["Following"]!)
+        .tag(1)
+    }
+    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+    .animation(.linear)
+  }
 }
 
 struct FollowList: View {

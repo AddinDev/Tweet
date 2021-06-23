@@ -14,18 +14,26 @@ struct HomeView: View {
   @State private var showUploadview = false
   
   var body: some View {
-    Group {
-      ZStack() {
-        if presenter.isLoading {
-          loadingIndicator
-        } else if presenter.posts.count == 0 {
-          emptyIndicator
-        } else if presenter.isError {
-          errorIndicator
-        } else {
-          content
+    GeometryReader { g in
+      Group {
+        ZStack() {
+          if presenter.isLoading {
+            loadingIndicator
+          } else if presenter.posts.count == 0 {
+            emptyIndicator
+          } else if presenter.isError {
+            errorIndicator
+          } else {
+            ScrollView {
+              LazyVStack(spacing: 0) {
+                ForEach(presenter.posts) { post in
+                  PostItemView(post: post, g: g)
+                }
+              }
+            }
+          }
+          uploadButton
         }
-        uploadButton
       }
     }
     .animation(.linear)
@@ -62,15 +70,9 @@ extension HomeView {
     Text("Empty")
   }
   
-  var content: some View {
-    ScrollView {
-      VStack {
-        ForEach(presenter.posts) { post in
-          PostItemView(post: post, last: post == presenter.posts.last ? true : false)
-        }
-      }
-    }
-  }
+  //  var content: some View {
+  //
+  //  }
   
   var uploadButton: some View {
     HStack {

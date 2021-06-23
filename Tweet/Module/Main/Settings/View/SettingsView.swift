@@ -61,9 +61,11 @@ extension SettingsView {
         errorIndicator
       } else {
         HStack {
-          Text("Following \(presenter.follows["Following"]?.count ?? 0)")
-          Spacer()
-          Text("Followers \(presenter.follows["Followers"]?.count ?? 0)")
+          if presenter.follows["Following"] != nil && presenter.follows["Followers"] != nil {
+            Text("Following \(presenter.follows["Following"]?.count ?? 0)")
+            Spacer()
+            Text("Followers \(presenter.follows["Followers"]?.count ?? 0)")
+          }
         }
         .foregroundColor(.primary)
         .padding()

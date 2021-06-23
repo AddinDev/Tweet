@@ -22,12 +22,12 @@ struct SearchView: View {
       }
     }
     .animation(.linear)
-    .onAppear {
-      //      if presenter.posts.count == 0 {
-      presenter.getAllPosts()
-      //      }
-    }
   }
+//  .onAppear {
+  //      if presenter.posts.count == 0 {
+  //      presenter.getAllPosts()
+  //      }
+//  }
 }
 
 extension SearchView {
@@ -67,26 +67,24 @@ extension SearchView {
       VStack {
         ForEach(presenter.users) { user in
           presenter.linkToProfile(user: user) {
-            HStack {
-              Text(user.username)
-            }
+            UserItemView(user: user)
           }
         }
       }
     }
   }
   
-  var posts: some View {
-    ScrollView {
-      VStack {
-        ForEach(presenter.posts) { post in
-          presenter.linkToDetail(post: post) {
-            PostItemView(post: post, last: post == presenter.posts.last ? true : false)
-          }
-        }
-      }
-    }
-  }
+//  var posts: some View {
+//    ScrollView {
+//      VStack {
+//        ForEach(presenter.posts) { post in
+//          presenter.linkToDetail(post: post) {
+//            PostItemView(post: post, g: g)
+//          }
+//        }
+//      }
+//    }
+//  }
   
 }
 

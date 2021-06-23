@@ -12,17 +12,17 @@ struct UserItemView: View {
   var user: UserModel
   
   var body: some View {
-    VStack {
-      VStack(alignment: .leading) {
-        Divider()
-        HStack {
-          Text(user.username)
-          Spacer()
-        }
-        .padding(.horizontal, 10)
-        Divider()
-      }
+    HStack {
+      Text(user.username)
+        .foregroundColor(Color("BW"))
+        .padding()
+      Spacer()
     }
+    .background(Color("BW")
+                  .opacity(0.05)
+                  .cornerRadius(10))
+    .padding(.horizontal)
+    .padding(.top, 7)
   }
   
 }

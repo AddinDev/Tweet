@@ -46,15 +46,16 @@ class HomePresenter: ObservableObject {
         }
       } receiveValue: { posts in
         self.posts = self.sortPosts(posts)
+        print("posts: \(posts)")
       }
       .store(in: &cancellables)
   }
   
-  func sortPosts(_ models: [PostModel]) -> [PostModel] {
+  private func sortPosts(_ models: [PostModel]) -> [PostModel] {
     let count = 0..<models.count
     let dateFormatter = DateFormatter()
     
-    dateFormatter.dateFormat = "dd/MM/yyyy "
+    dateFormatter.dateFormat = "dd/MM/yy HH:mm"
     
     var convertedArray: [(String, String, Date, UserModel)] = []
     
@@ -66,11 +67,25 @@ class HomePresenter: ObservableObject {
     
     let ready = convertedArray.sorted(by:  { $0.2.compare($1.2) == .orderedDescending })
     
+    // formate the date to be more simple
+    let dateFormatterGet = DateFormatter()
+    dateFormatterGet.dateFormat = "dd/MM/yy HH:mm"
+    let dateFormatterPrint = DateFormatter()
+    dateFormatterPrint.dateFormat = "dd/MM/yy"
+    
+    
     let final = ready.map { item in
-      return PostModel(id: item.0, text: item.1, date: dateFormatter.string(from: item.2), user: item.3)
+      return PostModel(id: item.0,
+                       text: item.1,
+                       date: dateFormatterPrint.string(from: dateFormatterGet.date(from: dateFormatterGet.string(from: item.2)) ?? Date()),
+                       user: item.3)
     }
 
     return final
+  }
+  
+  func linkToDetail<Content: View>(post: PostModel, @ViewBuilder content: () -> Content) -> some View {
+    NavigationLink(destination: router.makeDetailView(post: post)) { content() }
   }
   
 }

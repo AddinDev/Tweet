@@ -6,15 +6,19 @@
 //
 
 import SwiftUI
+import SwiftUIX
 
 struct HomeView: View {
-  
+    
   @ObservedObject var presenter: HomePresenter
   
   @State private var showUploadview = false
   
   var body: some View {
     GeometryReader { g in
+      ZStack {
+      Color("P")
+        
       Group {
         ZStack() {
           if presenter.isLoading {
@@ -24,10 +28,12 @@ struct HomeView: View {
           } else if presenter.isError {
             errorIndicator
           } else {
-            ScrollView {
+            ScrollView(showsIndicators: false) {
               LazyVStack(spacing: 0) {
                 ForEach(presenter.posts) { post in
-                  PostItemView(post: post, g: g)
+                  presenter.linkToDetail(post: post) {
+                    PostItemView(post: post, g: g)
+                  }
                 }
               }
             }
@@ -35,11 +41,13 @@ struct HomeView: View {
           uploadButton
         }
       }
+        
+      }
     }
     .animation(.linear)
     .onAppear {
       if presenter.posts.count == 0 {
-        presenter.getPosts()
+      presenter.getPosts()
       }
     }
     .fullScreenCover(isPresented: $showUploadview, onDismiss: {
@@ -88,7 +96,7 @@ extension HomeView {
             .foregroundColor(.white)
             .frame(width: 25)
             .padding()
-            .background(Circle().foregroundColor(.blue))
+            .background(BlurEffectView(style: .regular).clipShape(Circle()))
             .padding()
         }
       }

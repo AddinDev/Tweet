@@ -33,6 +33,7 @@ extension ContentView {
           .navigationBarTitle("", displayMode: .inline)
           .navigationBarHidden(true)
         }
+        .accentColor(.black)
       } else {
         signer
       }

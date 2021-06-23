@@ -15,4 +15,8 @@ class HomeRouter {
     return UploadView(presenter: presenter)
   }
   
+  func makeDetailView(post: PostModel) -> some View {
+    return PostDetailView(post: post)
+  }
+  
 }

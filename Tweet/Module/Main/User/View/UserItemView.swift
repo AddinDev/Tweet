@@ -13,16 +13,23 @@ struct UserItemView: View {
   
   var body: some View {
     HStack {
-      Text(user.username)
-        .foregroundColor(Color("BW"))
-        .padding()
-      Spacer()
+      HStack(alignment: .firstTextBaseline) {
+        VStack(alignment: .leading) {
+          Text(user.username)
+            .font(.largeTitle)
+            .fontWeight(.bold)
+            .foregroundColor(.black)
+            .lineLimit(4)
+          //          nospaceTags(tags: post.postType)
+          Spacer()
+          Divider().frame(height: 0.5).background(Color.black)
+          .padding(.bottom, 20)
+        }
+        .padding(.top, 30)
+      }
+      .padding(.horizontal)
     }
-    .background(Color("BW")
-                  .opacity(0.05)
-                  .cornerRadius(10))
-    .padding(.horizontal)
-    .padding(.top, 7)
+    .background(Color.lighterPink)
   }
   
 }

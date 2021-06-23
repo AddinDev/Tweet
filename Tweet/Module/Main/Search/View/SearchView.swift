@@ -11,23 +11,28 @@ struct SearchView: View {
   
   @ObservedObject var presenter: SearchPresenter
   
+  @State private var isEditing = false
+  
   var body: some View {
-    Group {
-      if presenter.isLoading {
-        loadingIndicator
-      } else if presenter.isError {
-        errorIndicator
-      } else {
-        content
+    ZStack {
+      Color("P")
+      Group {
+        if presenter.isLoading {
+          loadingIndicator
+        } else if presenter.isError {
+          errorIndicator
+        } else {
+          content
+        }
       }
+      .animation(.linear)
     }
-    .animation(.linear)
   }
-//  .onAppear {
+  //  .onAppear {
   //      if presenter.posts.count == 0 {
   //      presenter.getAllPosts()
   //      }
-//  }
+  //  }
 }
 
 extension SearchView {
@@ -57,21 +62,29 @@ extension SearchView {
   
   var searchBar: some View {
     HStack {
-    TextField("Search User", text: $presenter.searchText)
-      .autocapitalization(.none)
-      .disableAutocorrection(true)
-      .padding()
-      Button(action: {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-      }) {
-        Text("Ok")
+      TextField("Search User", text: $presenter.searchText)
+        .autocapitalization(.none)
+        .disableAutocorrection(true)
+        .onTapGesture {
+          isEditing = true
+        }
+      if isEditing {
+        Button(action: {
+          isEditing = false
+          presenter.searchText = ""
+          //        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        }) {
+          Image(systemName: "x.circle.fill")
+            .renderingMode(.original)
+        }
       }
     }
+    .padding()
   }
   
   var users: some View {
     ScrollView {
-      VStack {
+      LazyVStack(spacing: 0) {
         ForEach(presenter.users) { user in
           presenter.linkToProfile(user: user) {
             UserItemView(user: user)
@@ -81,17 +94,17 @@ extension SearchView {
     }
   }
   
-//  var posts: some View {
-//    ScrollView {
-//      VStack {
-//        ForEach(presenter.posts) { post in
-//          presenter.linkToDetail(post: post) {
-//            PostItemView(post: post, g: g)
-//          }
-//        }
-//      }
-//    }
-//  }
+  //  var posts: some View {
+  //    ScrollView {
+  //      VStack {
+  //        ForEach(presenter.posts) { post in
+  //          presenter.linkToDetail(post: post) {
+  //            PostItemView(post: post, g: g)
+  //          }
+  //        }
+  //      }
+  //    }
+  //  }
   
 }
 

@@ -135,7 +135,7 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
           "text": text,
           "sender": user.username,
           "email": user.email,
-          "date": Date().getFormattedDate(format: "dd/MM/yy")
+          "date": Date().getFormattedDate(format: "dd/MM/yy HH:mm")
         ]) { error in
           if let error = error {
             completion(.failure(error))
@@ -191,6 +191,31 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
             } else {
               if let snapshots = snapshots?.documents {
                 var posts: [PostResponse] = []
+                
+                // get user itself
+                self.db.collection(self.posts)
+                  .whereField("email", isEqualTo: userEmail)
+                  .getDocuments { snapshots, error in
+                    if let error = error {
+                      completion(.failure(error))
+                      print("error: \(error)")
+                    } else {
+                      if let snapshots = snapshots?.documents {
+                        for snapshot in snapshots {
+                          let data = snapshot.data()
+                          if let text = data["text"] as? String,
+                             let sender = data["sender"] as? String,
+                             let email = data["email"] as? String,
+                             let date = data["date"] as? String {
+                            let post = PostResponse(sender: sender, email: email, text: text, date: date)
+                            posts.append(post)
+                          }
+                        }
+                      }
+                    }
+                  }
+                
+                // get followed
                 for snapshot in snapshots {
                   let data = snapshot.data()
                   if let email = data["email"] as? String {

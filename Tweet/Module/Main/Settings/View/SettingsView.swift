@@ -16,15 +16,18 @@ struct SettingsView: View {
   @State private var showFollows = false
   
   var body: some View {
-    content
-      .onAppear {
-        presenter.checkFollowing()
-        presenter.checkFollowers()
-      }
-      .sheet(isPresented: $showFollows) {
-        FollowListView(followers: presenter.followers,
-                       following: presenter.following)
-      }
+    ZStack {
+      Color("P")
+      content
+    }
+    .onAppear {
+      presenter.checkFollowing()
+      presenter.checkFollowers()
+    }
+    .sheet(isPresented: $showFollows) {
+      FollowListView(followers: presenter.followers,
+                     following: presenter.following)
+    }
   }
   
 }
@@ -44,35 +47,58 @@ extension SettingsView {
   }
   
   var content: some View {
-    VStack {
-      Text(auth.email)
-      Text(auth.username)
-      follows
-      logoutButton
+    HStack {
+      VStack(alignment: .leading, spacing: 0) {
+        Text(auth.user.username)
+          .font(.system(size: 60))
+          .fontWeight(.bold)
+          .foregroundColor(.black)
+        
+        Text(auth.user.email)
+          .font(.title)
+          .fontWeight(.bold)
+          .foregroundColor(.black)
+        
+        follows
+        
+        Spacer()
+        
+        logoutButton
+        
+        Spacer()
+      }
+      //        .padding(0)
+      Spacer()
     }
-    .padding()
   }
   
   var follows: some View {
-    HStack {
+    Group {
       Text("Following \(presenter.following.count)")
-      Spacer()
+        .font(.headline)
+        .padding(.top, 5)
       Text("Followers \(presenter.followers.count)")
+        .font(.headline)
     }
-    .foregroundColor(.primary)
-    .padding()
+    .foregroundColor(.black)
     .onTapGesture {
       showFollows = true
     }
   }
   
   var logoutButton: some View {
-    Button(action: {
-      presenter.logout {
-        auth.signOut()
+    HStack {
+      Spacer()
+      Button(action: {
+        presenter.logout {
+          auth.signOut()
+        }
+      }) {
+        Text("logout")
+          .font(.largeTitle)
+          .fontWeight(.bold)
+          .foregroundColor(.black)
       }
-    }) {
-      Text("Logout")
     }
   }
   

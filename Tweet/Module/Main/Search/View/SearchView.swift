@@ -14,19 +14,8 @@ struct SearchView: View {
   @State private var isEditing = false
   
   var body: some View {
-    ZStack {
-      Color("P")
-      Group {
-        if presenter.isLoading {
-          loadingIndicator
-        } else if presenter.isError {
-          errorIndicator
-        } else {
-          content
-        }
-      }
-      .animation(.linear)
-    }
+      content
+        .animation(.linear)
   }
   //  .onAppear {
   //      if presenter.posts.count == 0 {
@@ -55,7 +44,15 @@ extension SearchView {
     ScrollView {
       LazyVStack {
         searchBar
-        users
+        Group {
+          if presenter.isLoading {
+            loadingIndicator
+          } else if presenter.isError {
+            errorIndicator
+          } else {
+            users
+          }
+        }
       }
     }
   }

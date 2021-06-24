@@ -19,20 +19,21 @@ struct UploadView: View {
   
   var body: some View {
     NavigationView {
-      Group {
-        if presenter.isLoading {
-          loadingIndicator
-        } else if presenter.isError {
-          errorIndicator
-        } else {
-          content
+        Group {
+          if presenter.isLoading {
+            loadingIndicator
+          } else if presenter.isError {
+            errorIndicator
+          } else {
+            content
+          }
         }
-      }
-      .animation(.linear)
+        .animation(.linear)
       .navigationBarTitle("New Post", displayMode: .inline)
       .navigationBarItems(leading: cancelButton,
                           trailing: doneButton)
     }
+    .accentColor(.black)
   }
   
 }

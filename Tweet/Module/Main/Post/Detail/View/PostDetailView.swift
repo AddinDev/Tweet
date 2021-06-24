@@ -14,7 +14,11 @@ struct PostDetailView: View {
   var post: PostModel
   
   var body: some View {
+    ZStack {
+      Color("P")
+        .edgesIgnoringSafeArea(.bottom)
     content
+    }
       .navigationBarTitleDisplayMode(.inline)
       .navigationBarTitle(post.user.username)
       .navigationBarItems(trailing: Text(post.date)

@@ -14,19 +14,23 @@ struct ProfileView: View {
   
   var body: some View {
     GeometryReader { g in
-    Group {
-      if presenter.isLoading {
-        loadingIndicator
-      } else if presenter.isError {
-        errorIndicator
-      } else {
-        ScrollView {
-          LazyVStack(spacing: 0) {
-            ForEach(presenter.posts) { post in
-              PostItemView(post: post, g: g)
+      ZStack {
+        Color("P")
+          .edgesIgnoringSafeArea(.bottom)
+        Group {
+          if presenter.isLoading {
+            loadingIndicator
+          } else if presenter.isError {
+            errorIndicator
+          } else {
+            ScrollView {
+              LazyVStack(spacing: 0) {
+                ForEach(presenter.posts) { post in
+                  PostItemView(post: post, g: g)
+                }
+              }
             }
           }
-        }
         }
       }
     }
@@ -37,6 +41,7 @@ struct ProfileView: View {
       presenter.checkFollowStatus(auth.user)
       presenter.getPosts()
     }
+    
   }
   
 }

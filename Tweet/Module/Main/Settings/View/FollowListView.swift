@@ -24,10 +24,14 @@ struct FollowListView: View {
 extension FollowListView {
   
   var content: some View {
+    ZStack {
+      Color("P")
+        .edgesIgnoringSafeArea(.bottom)
     VStack {
       picker
       tab
       Spacer()
+    }
     }
   }
   
@@ -65,7 +69,7 @@ struct FollowList: View {
   
   var body: some View {
     ScrollView {
-      LazyVStack {
+      LazyVStack(spacing: 0) {
         ForEach(users) { user in
           UserItemView(user: user)
         }

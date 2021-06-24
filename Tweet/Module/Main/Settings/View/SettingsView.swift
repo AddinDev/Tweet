@@ -16,10 +16,7 @@ struct SettingsView: View {
   @State private var showFollows = false
   
   var body: some View {
-    ZStack {
-      Color("P")
       content
-    }
     .onAppear {
       presenter.checkFollowing()
       presenter.checkFollowers()

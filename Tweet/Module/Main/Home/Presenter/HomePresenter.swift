@@ -73,11 +73,12 @@ class HomePresenter: ObservableObject {
     let dateFormatterPrint = DateFormatter()
     dateFormatterPrint.dateFormat = "dd/MM/yy"
     
-    
     let final = ready.map { item in
       return PostModel(id: item.0,
                        text: item.1,
-                       date: dateFormatterPrint.string(from: dateFormatterGet.date(from: dateFormatterGet.string(from: item.2)) ?? Date()),
+                       date: Date().getFormattedDate(format: "dd/MM/yy") == dateFormatterPrint.string(from: dateFormatterGet.date(from: dateFormatterGet.string(from: item.2)) ?? Date()) ?
+                        (dateFormatterGet.date(from: dateFormatterGet.string(from: item.2)) ?? Date()).getFormattedDate(format: "HH:mm") :
+                        dateFormatterPrint.string(from: dateFormatterGet.date(from: dateFormatterGet.string(from: item.2)) ?? Date()),
                        user: item.3)
     }
 

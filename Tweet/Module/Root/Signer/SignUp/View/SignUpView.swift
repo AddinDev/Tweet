@@ -17,14 +17,18 @@ struct SignUpView: View {
   @State private var password = ""
   
   var body: some View {
-    Group {
-      if presenter.isLoading {
-        loadingIndicator
-      } else {
-        content
+    ZStack {
+      Color("P")
+        .edgesIgnoringSafeArea(.bottom)
+      Group {
+        if presenter.isLoading {
+          loadingIndicator
+        } else {
+          content
+        }
       }
+      .animation(.linear)
     }
-    .animation(.linear)
   }
 }
 
@@ -67,6 +71,7 @@ extension SignUpView {
         authenticate()
       }) {
         Text("Sign Up")
+          .foregroundColor(.primary)
           .padding(10)
           .background(Color(.systemGray6))
           .cornerRadius(8)

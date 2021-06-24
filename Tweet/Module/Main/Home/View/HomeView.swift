@@ -16,9 +16,6 @@ struct HomeView: View {
   
   var body: some View {
     GeometryReader { g in
-      ZStack {
-      Color("P")
-        
       Group {
         ZStack() {
           if presenter.isLoading {
@@ -41,17 +38,13 @@ struct HomeView: View {
           uploadButton
         }
       }
-        
-      }
     }
     .animation(.linear)
     .onAppear {
-      if presenter.posts.count == 0 {
       presenter.getPosts()
-      }
     }
     .fullScreenCover(isPresented: $showUploadview, onDismiss: {
-      //      presenter.getAllPosts()
+            presenter.getPosts()
     }) {
       presenter.makeUploadView()
     }

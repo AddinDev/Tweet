@@ -29,7 +29,11 @@ extension ContentView {
     Group {
       if auth.hasSignedIn {
         NavigationView {
-        main
+          ZStack {
+            Color("P")
+              .edgesIgnoringSafeArea(.bottom)
+            main
+          }
           .navigationBarTitle("", displayMode: .inline)
           .navigationBarHidden(true)
         }
@@ -64,7 +68,12 @@ extension ContentView {
   }
   
   var signer: some View {
-    SignInView(presenter: signInPresenter)
+    NavigationView {
+      SignInView(presenter: signInPresenter)
+        .navigationBarTitle("", displayMode: .inline)
+        .navigationBarHidden(true)
+    }
+    .accentColor(.black)
   }
   
 }

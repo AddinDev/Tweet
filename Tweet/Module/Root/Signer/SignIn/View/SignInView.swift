@@ -20,17 +20,21 @@ struct SignInView: View {
   @State private var showSignUp = false
   
   var body: some View {
-    Group {
-      if presenter.isLoading {
-        loadingIndicator
-      } else {
-        content
-          .sheet(isPresented: $showSignUp) {
-            presenter.makeSignUpView()
-          }
+    ZStack {
+      Color("P")
+        .edgesIgnoringSafeArea(.bottom)
+      Group {
+        if presenter.isLoading {
+          loadingIndicator
+        } else {
+          content
+            .sheet(isPresented: $showSignUp) {
+              presenter.makeSignUpView()
+            }
+        }
       }
+      .animation(.linear)
     }
-    .animation(.linear)
   }
 }
 
@@ -72,6 +76,7 @@ extension SignInView {
         authenticate()
       }) {
         Text("Sign In")
+          .foregroundColor(.primary)
           .padding(10)
           .background(Color(.systemGray6))
           .cornerRadius(8)

@@ -5,7 +5,7 @@
 //  Created by addin on 16/06/21.
 //
 
-import Foundation
+import SwiftUI
 import Combine
 import Firebase
 
@@ -191,7 +191,7 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
             } else {
               if let snapshots = snapshots?.documents {
                 var posts: [PostResponse] = []
-                
+
                 // get user itself
                 self.db.collection(self.posts)
                   .whereField("email", isEqualTo: userEmail)
@@ -214,7 +214,7 @@ extension RemoteDataSource: RemoteDataSourceProtocol {
                       }
                     }
                   }
-                
+
                 // get followed
                 for snapshot in snapshots {
                   let data = snapshot.data()

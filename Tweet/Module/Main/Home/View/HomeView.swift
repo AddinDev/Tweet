@@ -7,9 +7,12 @@
 
 import SwiftUI
 import SwiftUIX
+import Combine
 
 struct HomeView: View {
     
+  @EnvironmentObject var auth: Authentication
+  
   @ObservedObject var presenter: HomePresenter
   
   @State private var showUploadview = false
@@ -20,14 +23,14 @@ struct HomeView: View {
         ZStack() {
           if presenter.isLoading {
             loadingIndicator
-          } else if presenter.posts.count == 0 {
+          } else if posts.count == 0 {
             emptyIndicator
           } else if presenter.isError {
             errorIndicator
           } else {
             ScrollView(showsIndicators: false) {
               LazyVStack(spacing: 0) {
-                ForEach(presenter.posts) { post in
+                ForEach(posts) { post in
                   presenter.linkToDetail(post: post) {
                     PostItemView(post: post, g: g)
                   }
@@ -39,12 +42,22 @@ struct HomeView: View {
         }
       }
     }
-    .animation(.linear)
+    .animation(.spring())
     .onAppear {
-      presenter.getPosts()
+      if posts.count == 0 {
+        presenter.getPosts()
+      }
     }
+    .onReceive(Just(auth.hasSignedIn), perform: { value in
+      if !value {
+      if posts.count != 0 {
+        presenter.followedPosts = []
+        presenter.userPosts = []
+      }
+      }
+    })
     .fullScreenCover(isPresented: $showUploadview, onDismiss: {
-            presenter.getPosts()
+      // nun
     }) {
       presenter.makeUploadView()
     }
@@ -52,6 +65,10 @@ struct HomeView: View {
 }
 
 extension HomeView {
+  
+  var posts: [PostModel] {
+    presenter.sortPosts(presenter.followedPosts + presenter.userPosts)
+  }
   
   var loadingIndicator: some View {
     VStack {
@@ -94,6 +111,7 @@ extension HomeView {
         }
       }
     }
+    .padding(10)
   }
   
 }

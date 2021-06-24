@@ -44,7 +44,7 @@ class ProfilePresenter: ObservableObject {
           self.isLoading = false
         }
       } receiveValue: { posts in
-        self.posts = posts
+        self.posts = self.sortPosts(posts)
       }
       .store(in: &cancellables)
   }
@@ -89,4 +89,38 @@ class ProfilePresenter: ObservableObject {
       .store(in: &cancellables)
   }
   
+  
+  private func sortPosts(_ models: [PostModel]) -> [PostModel] {
+    let count = 0..<models.count
+    let dateFormatter = DateFormatter()
+    
+    dateFormatter.dateFormat = "dd/MM/yy HH:mm"
+    
+    var convertedArray: [(String, String, Date, UserModel)] = []
+    
+    for i in count {
+      if let date =  dateFormatter.date(from: models[i].date) {
+        convertedArray.append((models[i].id, models[i].text, date, models[i].user))
+      }
+    }
+    
+    let ready = convertedArray.sorted(by:  { $0.2.compare($1.2) == .orderedDescending })
+    
+    // formate the date to be more simple
+    let dateFormatterGet = DateFormatter()
+    dateFormatterGet.dateFormat = "dd/MM/yy HH:mm"
+    let dateFormatterPrint = DateFormatter()
+    dateFormatterPrint.dateFormat = "dd/MM/yy"
+    
+    let final = ready.map { item in
+      return PostModel(id: item.0,
+                       text: item.1,
+                       date: Date().getFormattedDate(format: "dd/MM/yy") == dateFormatterPrint.string(from: dateFormatterGet.date(from: dateFormatterGet.string(from: item.2)) ?? Date()) ?
+                        (dateFormatterGet.date(from: dateFormatterGet.string(from: item.2)) ?? Date()).getFormattedDate(format: "HH:mm") :
+                        dateFormatterPrint.string(from: dateFormatterGet.date(from: dateFormatterGet.string(from: item.2)) ?? Date()),
+                       user: item.3)
+    }
+    
+    return final
+  }
 }

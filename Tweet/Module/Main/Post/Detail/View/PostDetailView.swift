@@ -17,12 +17,12 @@ struct PostDetailView: View {
     ZStack {
       Color("P")
         .edgesIgnoringSafeArea(.bottom)
-    content
+      content
     }
-      .navigationBarTitleDisplayMode(.inline)
-      .navigationBarTitle(post.user.username)
-      .navigationBarItems(trailing: Text(post.date)
-                            .fontWeight(.light))
+    .navigationBarTitleDisplayMode(.inline)
+    //      .navigationBarTitle(post.user.username)
+    .navigationBarItems(trailing: Text(post.date)
+                          .fontWeight(.light))
   }
   
 }
@@ -33,16 +33,14 @@ extension PostDetailView {
     VStack {
       Spacer()
       Text(post.text)
-      toProfileButton
+        .font(.title2)
+      NavigationLink(destination: router.makeProfileView(user: post.user)) {
+        Text(post.user.username)
+//          .bold()
+      }
       Spacer()
     }
     .padding()
-  }
-  
-  var toProfileButton: some View {
-    NavigationLink(destination: router.makeProfileView(user: post.user)) {
-      Text("To User Page")
-    }
   }
   
 }

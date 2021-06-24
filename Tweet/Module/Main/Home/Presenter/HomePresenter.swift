@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Firebase
 import Combine
 
 class HomePresenter: ObservableObject {
@@ -14,13 +15,15 @@ class HomePresenter: ObservableObject {
   
   private var useCase: HomeUseCase
   
-  @Published var posts: [PostModel] = []
+  @Published var followedPosts: [PostModel] = []
+  @Published var userPosts: [PostModel] = []
+  
   @Published var isLoading = false
   @Published var isError = false
   @Published var errorMessage = ""
   
   private var cancellables: Set<AnyCancellable> = []
-
+  
   
   init(useCase: HomeUseCase) {
     self.useCase = useCase
@@ -31,27 +34,112 @@ class HomePresenter: ObservableObject {
   }
   
   func getPosts() {
-    self.isLoading = true
-    self.isError = false
-    self.errorMessage = ""
-    useCase.getFollowedPosts()
-      .sink { completion in
-        switch completion {
-        case .failure(let error):
-          self.errorMessage = error.localizedDescription
-          self.isError = true
-          self.isLoading = false
-        case .finished:
-          self.isLoading = false
-        }
-      } receiveValue: { posts in
-        self.posts = self.sortPosts(posts)
-        print("posts: \(posts)")
-      }
-      .store(in: &cancellables)
+    self.getFollowedPosts()
+    self.getUserPosts()
   }
   
-  private func sortPosts(_ models: [PostModel]) -> [PostModel] {
+  //  func getPosts() {
+  //    self.isLoading = true
+  //    self.isError = false
+  //    self.errorMessage = ""
+  //    useCase.getFollowedPosts()
+  //      .sink { completion in
+  //        switch completion {
+  //        case .failure(let error):
+  //          self.errorMessage = error.localizedDescription
+  //          self.isError = true
+  //          self.isLoading = false
+  //        case .finished:
+  //          self.isLoading = false
+  //        }
+  //      } receiveValue: { posts in
+  //        self.posts = self.sortPosts(posts)
+  //        print("posts: \(posts)")
+  //      }
+  //      .store(in: &cancellables)
+  //  }
+  
+  func getFollowedPosts() {
+    if let userEmail = Auth.auth().currentUser?.email {
+      Firestore.firestore().collection("Users")
+        .document(userEmail)
+        .collection("Following")
+        .addSnapshotListener { snapshots, error in
+          if let error = error {
+            self.errorMessage = error.localizedDescription
+            self.isError = true
+            self.isLoading = false
+            print("error: \(error)")
+          } else {
+            if let snapshots = snapshots?.documents {
+              //              var posts: [PostModel] = []
+              self.followedPosts = []
+              // get followed
+              for snapshot in snapshots {
+                let data = snapshot.data()
+                if let email = data["email"] as? String {
+                  Firestore.firestore().collection("Posts")
+                    .whereField("email", isEqualTo: email)
+                    .getDocuments { snapshots, error in
+                      if let error = error {
+                        self.errorMessage = error.localizedDescription
+                        self.isError = true
+                        self.isLoading = false
+                        print("error: \(error)")
+                      } else {
+                        if let snapshots = snapshots?.documents {
+                          for snapshot in snapshots {
+                            let data = snapshot.data()
+                            if let text = data["text"] as? String,
+                               let sender = data["sender"] as? String,
+                               let email = data["email"] as? String,
+                               let date = data["date"] as? String {
+                              let post = PostModel(id: UUID().uuidString, text: text, date: date, user: UserModel(id: UUID().uuidString, email: email, username: sender, photoUrl: nil))
+                              self.followedPosts.append(post)
+                            }
+                          }
+                        }
+                      }
+                    }
+                }
+              }
+            }
+          }
+        }
+    }
+  }
+  
+  func getUserPosts() {
+    if let userEmail = Auth.auth().currentUser?.email {
+      // get user itself
+      Firestore.firestore().collection("Posts")
+        .whereField("email", isEqualTo: userEmail)
+        .addSnapshotListener { snapshots, error in
+          if let error = error {
+            self.errorMessage = error.localizedDescription
+            self.isError = true
+            self.isLoading = false
+            print("error: \(error)")
+          } else {
+            if let snapshots = snapshots?.documents {
+              self.userPosts = []
+              for snapshot in snapshots {
+                let data = snapshot.data()
+                if let text = data["text"] as? String,
+                   let sender = data["sender"] as? String,
+                   let email = data["email"] as? String,
+                   let date = data["date"] as? String {
+                  let post = PostModel(id: UUID().uuidString, text: text, date: date, user: UserModel(id: UUID().uuidString, email: email, username: sender, photoUrl: nil))
+                  self.userPosts.append(post)
+                }
+              }
+            }
+          }
+        }
+    }
+  }
+  
+  func sortPosts(_ models: [PostModel]) -> [PostModel] {
     let count = 0..<models.count
     let dateFormatter = DateFormatter()
     
@@ -81,7 +169,7 @@ class HomePresenter: ObservableObject {
                         dateFormatterPrint.string(from: dateFormatterGet.date(from: dateFormatterGet.string(from: item.2)) ?? Date()),
                        user: item.3)
     }
-
+    
     return final
   }
   

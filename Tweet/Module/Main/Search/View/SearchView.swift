@@ -60,6 +60,7 @@ extension SearchView {
   var searchBar: some View {
     HStack {
       TextField("Search User", text: $presenter.searchText)
+        .accentColor(.black)
         .autocapitalization(.none)
         .disableAutocorrection(true)
         .onTapGesture {
@@ -69,7 +70,8 @@ extension SearchView {
         Button(action: {
           isEditing = false
           presenter.searchText = ""
-          //        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+          presenter.users = []
+                  UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         }) {
           Image(systemName: "x.circle.fill")
             .renderingMode(.original)

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftUIX
 
 struct PostItemView: View {
 
@@ -28,19 +29,19 @@ extension PostItemView {
           Text(post.text)
             .font(.largeTitle)
             .fontWeight(.bold)
-            .foregroundColor(.black)
+            .foregroundColor(.primary)
             .lineLimit(4)
           //          nospaceTags(tags: post.postType)
           Spacer()
-          Divider().frame(height: 0.5).background(Color.black)
+          Divider().frame(height: 0.5).background(Color.primary)
           HStack {
             Text(post.user.username)
               .font(.caption)
-              .foregroundColor(.black)
+              .foregroundColor(.primary)
             Spacer()
             Text(post.date)
               .font(.caption)
-              .foregroundColor(.black)
+              .foregroundColor(.primary)
           }
           .padding(.bottom, 20)
         }
@@ -48,7 +49,9 @@ extension PostItemView {
       }
       .padding(.horizontal)
     }
-    .background(Color.lighterPink)
+    .background(BlurEffectView(style: .regular).cornerRadius(20))
+    .padding(.top, 10)
+    .padding(.horizontal, 10)
 //    .frame(width: g.size.width, height: g.size.height / 2.5)
   }
 

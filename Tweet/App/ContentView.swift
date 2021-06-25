@@ -30,8 +30,10 @@ extension ContentView {
       if auth.hasSignedIn {
         NavigationView {
           ZStack {
-            Color("P")
+            Image("purplesupra")
+              .resizable()
               .edgesIgnoringSafeArea(.bottom)
+              .fill()
             main
           }
           .navigationBarTitle("", displayMode: .inline)

@@ -31,13 +31,17 @@ extension PostDetailView {
   
   var content: some View {
     VStack {
+      HStack {
+        Spacer()
+        NavigationLink(destination: router.makeProfileView(user: post.user)) {
+          Text(post.user.username)
+          //          .bold()
+        }
+      }
       Spacer()
       Text(post.text)
         .font(.title2)
-      NavigationLink(destination: router.makeProfileView(user: post.user)) {
-        Text(post.user.username)
-//          .bold()
-      }
+
       Spacer()
     }
     .padding()

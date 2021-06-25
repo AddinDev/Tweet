@@ -16,15 +16,15 @@ struct SettingsView: View {
   @State private var showFollows = false
   
   var body: some View {
-      content
-    .onAppear {
-      presenter.checkFollowing()
-      presenter.checkFollowers()
-    }
-    .sheet(isPresented: $showFollows) {
-      FollowListView(followers: presenter.followers,
-                     following: presenter.following)
-    }
+    content
+      .onAppear {
+        presenter.checkFollowing()
+        presenter.checkFollowers()
+      }
+      .sheet(isPresented: $showFollows) {
+        FollowListView(followers: presenter.followers,
+                       following: presenter.following)
+      }
   }
   
 }
@@ -44,29 +44,39 @@ extension SettingsView {
   }
   
   var content: some View {
-    HStack {
-      VStack(alignment: .leading, spacing: 0) {
-        Text(auth.user.username)
-          .font(.system(size: 60))
-          .fontWeight(.bold)
-          .foregroundColor(.black)
-        
-        Text(auth.user.email)
-          .font(.title)
-          .fontWeight(.bold)
-          .foregroundColor(.black)
-        
-        follows
-        
-        Spacer()
-        
-        logoutButton
-        
-        Spacer()
+    Group {
+      if presenter.isLoading {
+        loadingIndicator
+      } else if presenter.isError {
+        errorIndicator
+      } else {
+        HStack {
+          VStack(alignment: .leading, spacing: 0) {
+            
+            Text(auth.user.username)
+              .font(.system(size: 60))
+              .fontWeight(.bold)
+              .foregroundColor(.black)
+            
+            Text(auth.user.email)
+              .font(.title)
+              .fontWeight(.bold)
+              .foregroundColor(.black)
+            
+            follows
+            
+            Spacer()
+            
+            logoutButton
+            
+            Spacer()
+          }
+          Spacer()
+          
+        }
       }
-      //        .padding(0)
-      Spacer()
     }
+    .animation(.spring())
   }
   
   var follows: some View {
